@@ -1,0 +1,152 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #1f2933;
+  background: #faf7f2;
+  line-height: 1.6;
+}
+
+a {
+  color: #7c4a2d;
+}
+
+.container {
+  width: min(1100px, 92%);
+  margin: 0 auto;
+}
+
+.site-header {
+  background: #fff;
+  border-bottom: 1px solid #eadfce;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #1f2933;
+}
+
+nav {
+  display: flex;
+  gap: 1.25rem;
+}
+
+nav a {
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.95rem;
+}
+
+.hero {
+  padding: 5rem 0 4rem;
+  background: linear-gradient(180deg, #fff 0%, #faf7f2 100%);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #7c4a2d;
+}
+
+.hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  line-height: 1.1;
+  margin: 0.5rem 0 1rem;
+  max-width: 12ch;
+}
+
+.lead {
+  font-size: 1.15rem;
+  max-width: 42rem;
+}
+
+.button {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.85rem 1.4rem;
+  background: #7c4a2d;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 999px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.section {
+  padding: 4rem 0;
+}
+
+.section-alt {
+  background: #fff;
+}
+
+.two-column {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  align-items: start;
+}
+
+.services-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-top: 2rem;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #eadfce;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(31, 41, 51, 0.05);
+}
+
+.section-alt .card {
+  background: #faf7f2;
+}
+
+.card h3,
+h2 {
+  margin-top: 0;
+}
+
+.contact-box {
+  background: #fff;
+  border: 1px solid #eadfce;
+  border-radius: 20px;
+  padding: 2rem;
+}
+
+.site-footer {
+  padding: 2rem 0;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9rem;
+  color: #52606d;
+}
+
+@media (max-width: 640px) {
+  nav {
+    gap: 0.75rem;
+    font-size: 0.85rem;
+  }
+}
