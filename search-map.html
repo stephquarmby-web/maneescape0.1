@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Map view — search trail rides, horse-friendly stays and BYO horse holidays across Australia and New Zealand.">
+<title>Mane Escape — Map View</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ironbark:#2C3A2A;
+    --ironbark-light:#4A5C43;
+    --gumleaf:#6B8C5A;
+    --gumleaf-light:#A8C894;
+    --sandy-clay:#E8E0CC;
+    --sandy-clay-light:#F5F0E8;
+    --cream:#FDFAF4;
+    --wattle:#BA7517;
+    --amber-light:#FAEEDA;
+
+    --type-day:#1D9E75;
+    --type-multiday:#7F77DD;
+    --type-accom:#BA7517;
+    --type-byo:#D85A30;
+
+    --text-primary: var(--ironbark);
+    --text-secondary: var(--ironbark-light);
+    --text-tertiary: #8A9484;
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 18px;
+    --shadow-card: 0 2px 10px rgba(44,58,42,0.08), 0 1px 2px rgba(44,58,42,0.06);
+    --shadow-lift: 0 12px 28px rgba(44,58,42,0.16);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html, body{ height:100%; }
+  body{
+    font-family:'DM Sans', sans-serif;
+    background:var(--cream);
+    color:var(--text-primary);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column;
+  }
+  h1,h2,h3,h4{ font-family:'Playfair Display', serif; font-weight:500; color:var(--ironbark); line-height:1.2; }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:none; }
+  ul{ list-style:none; }
+
+  /* HEADER */
+  header{
+    flex-shrink:0;
+    position:sticky; top:0; z-index:200;
+    background:var(--cream);
+    border-bottom:1px solid rgba(44,58,42,0.08);
+  }
+  .wrap{ max-width:1320px; margin:0 auto; padding:0 40px; }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; height:70px; }
+  .logo{ display:flex; align-items:center; gap:10px; }
+  .logo-mark{ width:30px; height:30px; border-radius:50%; background:var(--ironbark); display:flex; align-items:center; justify-content:center; color:var(--sandy-clay-light); font-family:'Playfair Display'; font-size:15px; }
+  .logo-text{ font-family:'Playfair Display'; font-size:18px; font-weight:600; }
+  .logo-text span{ color:var(--gumleaf); }
+  nav.primary{ display:flex; align-items:center; gap:30px; }
+  nav.primary a{ font-size:14px; font-weight:500; color:var(--text-secondary); }
+  nav.primary a.active{ color:var(--ironbark); border-bottom:2px solid var(--gumleaf); padding-bottom:4px; }
+  .btn{ font-size:13px; font-weight:700; padding:9px 18px; border-radius:24px; }
+  .btn-ghost{ color:var(--ironbark); }
+  .btn-primary{ background:var(--ironbark); color:var(--cream); }
+
+  /* TOOLBAR STRIP */
+  .toolbar-strip{
+    flex-shrink:0;
+    border-bottom:1px solid var(--sandy-clay);
+    background:var(--cream);
+    padding:0 40px;
+  }
+  .toolbar-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    height:58px;
+  }
+  .toolbar-left{ display:flex; align-items:center; gap:12px; }
+  .filter-btn{
+    display:flex; align-items:center; gap:8px; font-size:13.5px; font-weight:700; color:var(--ironbark);
+    background:var(--sandy-clay-light); padding:8px 16px; border-radius:9px; border:1px solid var(--sandy-clay);
+  }
+  .filter-count{ background:var(--gumleaf); color:#fff; font-size:10.5px; font-weight:700; width:18px; height:18px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  .pills-row{ display:flex; align-items:center; gap:8px; }
+  .pill{
+    display:flex; align-items:center; gap:7px;
+    background:var(--sandy-clay-light); border:1px solid var(--sandy-clay);
+    padding:6px 7px 6px 12px; border-radius:20px; font-size:12px; font-weight:600; color:var(--ironbark-light);
+  }
+  .pill button{ width:16px; height:16px; border-radius:50%; background:var(--sandy-clay); display:flex; align-items:center; justify-content:center; font-size:10px; color:var(--ironbark); }
+  .pill-clear{ font-size:12px; font-weight:700; color:var(--wattle); padding:6px 4px; cursor:pointer; }
+
+  .toolbar-right{ display:flex; align-items:center; gap:14px; }
+  .view-toggle{ display:flex; background:var(--sandy-clay-light); border-radius:9px; padding:3px; }
+  .view-toggle a, .view-toggle button{
+    display:flex; align-items:center; gap:5px;
+    font-size:12.5px; font-weight:700; padding:7px 15px; border-radius:7px; color:var(--text-secondary);
+    text-decoration:none;
+  }
+  .view-toggle a.active, .view-toggle button.active{ background:var(--cream); color:var(--ironbark); box-shadow:var(--shadow-card); }
+  .result-count-label{ font-size:13px; color:var(--text-secondary); }
+  .result-count-label strong{ color:var(--ironbark); }
+  .sort-select{ font-size:13px; font-weight:600; color:var(--text-secondary); cursor:pointer; }
+
+  /* SPLIT LAYOUT */
+  .split{
+    flex:1; display:flex; overflow:hidden; min-height:0;
+  }
+
+  /* SIDEBAR */
+  .sidebar{
+    width:400px; flex-shrink:0;
+    overflow-y:auto; padding:20px 20px 32px;
+    background:var(--cream);
+    border-right:1px solid var(--sandy-clay);
+  }
+  .sidebar::-webkit-scrollbar{ width:4px; }
+  .sidebar::-webkit-scrollbar-thumb{ background:var(--sandy-clay); border-radius:4px; }
+
+  .sidebar-head{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:16px;
+  }
+  .sidebar-head p{ font-size:13px; color:var(--text-secondary); }
+
+  /* RESULT CARDS (compact horizontal) */
+  .result-card{
+    display:grid; grid-template-columns:108px 1fr;
+    background:var(--cream); border-radius:var(--radius-md);
+    border:1px solid var(--sandy-clay-light); box-shadow:var(--shadow-card);
+    overflow:hidden; margin-bottom:12px; cursor:pointer;
+    transition:border-color .15s, box-shadow .15s, transform .15s;
+  }
+  .result-card:hover, .result-card.active{
+    border-color:var(--ironbark); box-shadow:var(--shadow-lift); transform:translateY(-1px);
+  }
+  .result-card.active{ border-color:var(--gumleaf); }
+  .card-thumb{ position:relative; }
+  .card-thumb .plate{ width:108px; height:100%; min-height:90px; }
+  .plate{ overflow:hidden; background-size:cover; background-position:center; }
+  .plate.p1{ background-image:linear-gradient(155deg,#5c6b45 0%,#3c4a30 55%,#26301f 100%); }
+  .plate.p2{ background-image:linear-gradient(155deg,#7a8f6a 0%,#4a5c43 55%,#2c3a2a 100%); }
+  .plate.p3{ background-image:linear-gradient(160deg,#b98f52 0%,#7c5c34 55%,#4a3a22 100%); }
+  .plate.p4{ background-image:linear-gradient(160deg,#9a6b4a 0%,#6b4530 55%,#402c20 100%); }
+  .plate.p5{ background-image:linear-gradient(150deg,#6f8062 0%,#445238 100%); }
+  .plate.p6{ background-image:linear-gradient(150deg,#c99a5c 0%,#8a5f34 100%); }
+  .fav-btn{
+    position:absolute; top:7px; right:7px;
+    width:24px; height:24px; border-radius:50%; background:rgba(253,250,244,0.92);
+    display:flex; align-items:center; justify-content:center; font-size:12px;
+  }
+  .card-body{ padding:12px 13px 12px; display:flex; flex-direction:column; justify-content:space-between; }
+  .type-tag{
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:9px; font-weight:700; letter-spacing:0.03em; text-transform:uppercase;
+    padding:3px 8px; border-radius:20px; color:#fff; margin-bottom:5px; width:fit-content;
+  }
+  .type-tag.day{ background:var(--type-day); }
+  .type-tag.multiday{ background:var(--type-multiday); }
+  .type-tag.accom{ background:var(--type-accom); }
+  .type-tag.byo{ background:var(--type-byo); }
+  .card-body h4{ font-size:14px; line-height:1.25; margin-bottom:4px; }
+  .card-region{ font-size:11px; color:var(--text-tertiary); font-weight:600; }
+  .card-footer{ display:flex; align-items:center; justify-content:space-between; margin-top:8px; }
+  .card-price{ font-size:13px; font-weight:700; }
+  .card-price small{ font-size:10.5px; font-weight:400; color:var(--text-tertiary); }
+  .card-rating{ font-size:11.5px; font-weight:600; color:var(--text-secondary); }
+
+  .load-more-btn{
+    width:100%; margin-top:8px; padding:12px; border-radius:24px;
+    border:1.5px solid var(--ironbark); color:var(--ironbark);
+    font-size:13px; font-weight:700; cursor:pointer;
+  }
+
+  /* MAP AREA */
+  .map-area{
+    flex:1; position:relative; overflow:hidden;
+  }
+
+  /* Fake map background — terrain-style gradient tiles */
+  .map-canvas{
+    width:100%; height:100%;
+    background:
+      radial-gradient(ellipse 70% 50% at 60% 40%, #d4e6c8 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 30% 70%, #c8d9bc 0%, transparent 50%),
+      radial-gradient(ellipse 55% 40% at 75% 75%, #ccdfc0 0%, transparent 55%),
+      linear-gradient(160deg, #e8edd8 0%, #dde8cc 30%, #d0dfbf 60%, #c8d8b8 100%);
+    position:relative;
+  }
+
+  /* Fake roads */
+  .map-canvas::before{
+    content:'';
+    position:absolute; inset:0;
+    background:
+      linear-gradient(52deg, transparent 48%, rgba(255,255,255,0.55) 48.5%, rgba(255,255,255,0.55) 49%, transparent 49%),
+      linear-gradient(142deg, transparent 38%, rgba(255,255,255,0.4) 38.5%, rgba(255,255,255,0.4) 39%, transparent 39%),
+      linear-gradient(90deg, transparent 62%, rgba(255,255,255,0.35) 62.5%, rgba(255,255,255,0.35) 63%, transparent 63%),
+      linear-gradient(10deg, transparent 55%, rgba(255,255,255,0.3) 55.5%, rgba(255,255,255,0.3) 56%, transparent 56%);
+  }
+
+  /* Fake terrain patches */
+  .map-canvas::after{
+    content:'';
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 18% 12% at 22% 35%, rgba(100,130,80,0.25) 0%, transparent 100%),
+      radial-gradient(ellipse 22% 14% at 68% 28%, rgba(90,120,70,0.2) 0%, transparent 100%),
+      radial-gradient(ellipse 14% 20% at 80% 62%, rgba(110,140,90,0.22) 0%, transparent 100%),
+      radial-gradient(ellipse 16% 10% at 45% 80%, rgba(95,125,75,0.18) 0%, transparent 100%);
+  }
+
+  /* MAP PINS */
+  .pin{
+    position:absolute; transform:translate(-50%, -100%);
+    cursor:pointer; z-index:10;
+  }
+  .pin-bubble{
+    background:var(--ironbark); color:var(--cream);
+    font-size:11.5px; font-weight:700;
+    padding:6px 11px; border-radius:20px;
+    white-space:nowrap;
+    box-shadow:0 3px 12px rgba(44,58,42,0.35);
+    transition:transform .15s, background .15s;
+    position:relative;
+  }
+  .pin-bubble::after{
+    content:''; position:absolute; left:50%; bottom:-6px;
+    transform:translateX(-50%);
+    border:4px solid transparent; border-top:6px solid var(--ironbark);
+  }
+  .pin:hover .pin-bubble, .pin.active .pin-bubble{
+    background:var(--gumleaf); transform:scale(1.08);
+  }
+  .pin:hover .pin-bubble::after, .pin.active .pin-bubble::after{
+    border-top-color:var(--gumleaf);
+  }
+  .pin.type-day .pin-bubble{ background:var(--type-day); }
+  .pin.type-day .pin-bubble::after{ border-top-color:var(--type-day); }
+  .pin.type-multiday .pin-bubble{ background:var(--type-multiday); }
+  .pin.type-multiday .pin-bubble::after{ border-top-color:var(--type-multiday); }
+  .pin.type-accom .pin-bubble{ background:var(--type-accom); }
+  .pin.type-accom .pin-bubble::after{ border-top-color:var(--type-accom); }
+  .pin.type-byo .pin-bubble{ background:var(--type-byo); }
+  .pin.type-byo .pin-bubble::after{ border-top-color:var(--type-byo); }
+  .pin.active .pin-bubble{ outline:3px solid var(--cream); outline-offset:1px; }
+
+  /* MAP POPUP */
+  .map-popup{
+    position:absolute; z-index:50;
+    width:260px;
+    background:var(--cream); border-radius:var(--radius-md);
+    box-shadow:var(--shadow-lift); overflow:hidden;
+    border:1px solid var(--sandy-clay);
+    display:none;
+  }
+  .map-popup.visible{ display:block; }
+  .popup-img{ height:130px; }
+  .popup-body{ padding:13px 14px 15px; }
+  .popup-type{ font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:5px; }
+  .popup-type.day{ color:var(--type-day); }
+  .popup-type.multiday{ color:var(--type-multiday); }
+  .popup-type.accom{ color:var(--type-accom); }
+  .popup-type.byo{ color:var(--type-byo); }
+  .popup-body h4{ font-size:14.5px; margin-bottom:4px; line-height:1.25; }
+  .popup-region{ font-size:11px; color:var(--text-tertiary); font-weight:600; margin-bottom:10px; }
+  .popup-footer{ display:flex; align-items:center; justify-content:space-between; }
+  .popup-price{ font-size:14px; font-weight:700; }
+  .popup-price small{ font-size:11px; font-weight:400; color:var(--text-tertiary); }
+  .popup-rating{ font-size:12px; font-weight:600; color:var(--text-secondary); }
+  .popup-close{
+    position:absolute; top:8px; right:8px; width:24px; height:24px; border-radius:50%;
+    background:rgba(253,250,244,0.9); display:flex; align-items:center; justify-content:center;
+    font-size:13px; cursor:pointer; color:var(--ironbark); z-index:2;
+  }
+
+  /* MAP CONTROLS */
+  .map-controls{
+    position:absolute; right:16px; top:16px; z-index:20;
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .map-ctrl{
+    width:36px; height:36px; border-radius:8px;
+    background:var(--cream); border:1px solid var(--sandy-clay);
+    box-shadow:var(--shadow-card);
+    display:flex; align-items:center; justify-content:center;
+    font-size:18px; font-weight:700; color:var(--ironbark); cursor:pointer;
+  }
+  .map-ctrl:hover{ background:var(--sandy-clay-light); }
+
+  /* MAP LEGEND */
+  .map-legend{
+    position:absolute; left:16px; bottom:20px; z-index:20;
+    background:var(--cream); border-radius:var(--radius-md);
+    box-shadow:var(--shadow-card); padding:12px 16px;
+    border:1px solid var(--sandy-clay);
+  }
+  .map-legend p{ font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-tertiary); margin-bottom:8px; }
+  .legend-row{ display:flex; align-items:center; gap:7px; font-size:12px; font-weight:600; color:var(--text-secondary); margin-bottom:5px; }
+  .legend-row:last-child{ margin-bottom:0; }
+  .legend-dot{ width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+
+  /* SEARCH THIS AREA */
+  .search-area-btn{
+    position:absolute; top:16px; left:50%; transform:translateX(-50%); z-index:20;
+    background:var(--cream); border:1px solid var(--sandy-clay); border-radius:24px;
+    box-shadow:var(--shadow-lift); padding:9px 18px;
+    font-size:13px; font-weight:700; color:var(--ironbark); cursor:pointer;
+    display:flex; align-items:center; gap:7px;
+  }
+  .search-area-btn:hover{ background:var(--sandy-clay-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-row">
+    <div class="logo">
+      <a href="index.html" style="display:flex; align-items:center; gap:10px;">
+        <div class="logo-mark">M</div>
+        <div class="logo-text">Mane <span>Escape</span></div>
+      </a>
+    </div>
+    <nav class="primary">
+      <a href="#" class="active">Discover</a>
+      <a href="#">Trip Map</a>
+      <a href="#">Guides</a>
+      <a href="#">About</a>
+    </nav>
+    <div style="display:flex; gap:12px;">
+      <a href="#" class="btn btn-ghost">List your property</a>
+      <a href="#" class="btn btn-primary">Sign in</a>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar-strip">
+  <div class="toolbar-inner">
+    <div class="toolbar-left">
+      <div class="filter-btn">Filters <span class="filter-count">3</span></div>
+      <div class="pills-row">
+        <div class="pill">Snowy Mountains <button>×</button></div>
+        <div class="pill">Multi-day treks <button>×</button></div>
+        <div class="pill">$500 – $2,000 <button>×</button></div>
+        <div class="pill-clear">Clear all</div>
+      </div>
+    </div>
+    <div class="toolbar-right">
+      <span class="result-count-label"><strong>127</strong> experiences</span>
+      <div class="view-toggle">
+        <a href="search.html" class="btn-ghost">▦ Grid</a>
+        <a href="search-map.html" class="active">⊙ Map</a>
+      </div>
+      <div class="sort-select">Sort: Recommended ⌄</div>
+    </div>
+  </div>
+</div>
+
+<div class="split">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-head">
+      <p>Showing <strong>127</strong> results</p>
+    </div>
+
+    <div class="result-card active" data-pin="1">
+      <div class="card-thumb">
+        <div class="plate p3" style="height:100%; min-height:96px;"></div>
+        <span class="fav-btn">♡</span>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="type-tag multiday">● Multi-day</div>
+          <h4>4-day cattleman's trail trek &amp; camp</h4>
+          <div class="card-region">📍 Victorian High Country, VIC</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$1,180 <small>/ person</small></div>
+          <div class="card-rating">★ 4.8</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-card" data-pin="2">
+      <div class="card-thumb">
+        <div class="plate p1" style="height:100%; min-height:96px;"></div>
+        <span class="fav-btn">♡</span>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="type-tag day">● Day ride</div>
+          <h4>Alpine ridgeline half-day trail ride</h4>
+          <div class="card-region">📍 Snowy Mountains, NSW</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$145 <small>/ person</small></div>
+          <div class="card-rating">★ 4.9</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-card" data-pin="3">
+      <div class="card-thumb">
+        <div class="plate p2" style="height:100%; min-height:96px;"></div>
+        <span class="fav-btn">♡</span>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="type-tag day">● Day ride</div>
+          <h4>Full-day high plains ride with lunch stop</h4>
+          <div class="card-region">📍 Kosciuszko NP, NSW</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$225 <small>/ person</small></div>
+          <div class="card-rating">★ 4.7</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-card" data-pin="4">
+      <div class="card-thumb">
+        <div class="plate p4" style="height:100%; min-height:96px;"></div>
+        <span class="fav-btn">♡</span>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="type-tag accom">● Accommodation</div>
+          <h4>Thredbo Valley horse-friendly farmstay</h4>
+          <div class="card-region">📍 Jindabyne, NSW</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$110 <small>/ night</small></div>
+          <div class="card-rating">★ 4.6</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-card" data-pin="5">
+      <div class="card-thumb">
+        <div class="plate p5" style="height:100%; min-height:96px;"></div>
+        <span class="fav-btn">♡</span>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="type-tag byo">● Holiday w/ horse</div>
+          <h4>High country BYO horse retreat, 3 nights</h4>
+          <div class="card-region">📍 Adaminaby, NSW</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$165 <small>/ night</small></div>
+          <div class="card-rating">★ 5.0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-card" data-pin="6">
+      <div class="card-thumb">
+        <div class="plate p6" style="height:100%; min-height:96px;"></div>
+        <span class="fav-btn">♡</span>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="type-tag day">● Day ride</div>
+          <h4>Sunset beginner trail ride, Lake Jindabyne</h4>
+          <div class="card-region">📍 Snowy Mountains, NSW</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$95 <small>/ person</small></div>
+          <div class="card-rating">★ 4.8</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-card" data-pin="7">
+      <div class="card-thumb">
+        <div class="plate p3" style="height:100%; min-height:96px;"></div>
+        <span class="fav-btn">♡</span>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="type-tag accom">● Accommodation</div>
+          <h4>Monaro Plains stables &amp; guest cottages</h4>
+          <div class="card-region">📍 Berridale, NSW</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$130 <small>/ night</small></div>
+          <div class="card-rating">★ 4.9</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="load-more-btn">Load more results</button>
+  </aside>
+
+  <!-- MAP -->
+  <div class="map-area">
+    <div class="map-canvas" id="mapCanvas">
+
+      <!-- Search this area button -->
+      <button class="search-area-btn">↻ Search this area</button>
+
+      <!-- Pins -->
+      <div class="pin type-multiday active" style="left:42%; top:38%;" data-pin="1">
+        <div class="pin-bubble">$1,180</div>
+      </div>
+      <div class="pin type-day" style="left:58%; top:52%;" data-pin="2">
+        <div class="pin-bubble">$145</div>
+      </div>
+      <div class="pin type-day" style="left:65%; top:44%;" data-pin="3">
+        <div class="pin-bubble">$225</div>
+      </div>
+      <div class="pin type-accom" style="left:55%; top:62%;" data-pin="4">
+        <div class="pin-bubble">$110</div>
+      </div>
+      <div class="pin type-byo" style="left:48%; top:57%;" data-pin="5">
+        <div class="pin-bubble">$165</div>
+      </div>
+      <div class="pin type-day" style="left:62%; top:58%;" data-pin="6">
+        <div class="pin-bubble">$95</div>
+      </div>
+      <div class="pin type-accom" style="left:52%; top:70%;" data-pin="7">
+        <div class="pin-bubble">$130</div>
+      </div>
+      <!-- Extra background pins for depth -->
+      <div class="pin type-day" style="left:28%; top:48%; opacity:0.7;" data-pin="x1">
+        <div class="pin-bubble">$180</div>
+      </div>
+      <div class="pin type-multiday" style="left:75%; top:35%; opacity:0.7;" data-pin="x2">
+        <div class="pin-bubble">$890</div>
+      </div>
+      <div class="pin type-byo" style="left:35%; top:68%; opacity:0.7;" data-pin="x3">
+        <div class="pin-bubble">$120</div>
+      </div>
+      <div class="pin type-accom" style="left:80%; top:55%; opacity:0.7;" data-pin="x4">
+        <div class="pin-bubble">$155</div>
+      </div>
+
+      <!-- Popup (shown on pin click) -->
+      <div class="map-popup" id="mapPopup">
+        <span class="popup-close" id="popupClose">×</span>
+        <div class="popup-img plate p3" id="popupImg"></div>
+        <div class="popup-body">
+          <div class="popup-type multiday" id="popupType">● Multi-day trek</div>
+          <h4 id="popupTitle">4-day cattleman's trail trek &amp; camp</h4>
+          <div class="popup-region" id="popupRegion">📍 Victorian High Country, VIC</div>
+          <div class="popup-footer">
+            <div class="popup-price" id="popupPrice">$1,180 <small>/ person</small></div>
+            <div class="popup-rating" id="popupRating">★ 4.8</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map controls -->
+      <div class="map-controls">
+        <div class="map-ctrl">+</div>
+        <div class="map-ctrl">−</div>
+        <div class="map-ctrl" style="font-size:14px;">⊕</div>
+      </div>
+
+      <!-- Legend -->
+      <div class="map-legend">
+        <p>Listing type</p>
+        <div class="legend-row"><div class="legend-dot" style="background:var(--type-day);"></div> Day rides</div>
+        <div class="legend-row"><div class="legend-dot" style="background:var(--type-multiday);"></div> Multi-day treks</div>
+        <div class="legend-row"><div class="legend-dot" style="background:var(--type-accom);"></div> Accommodation</div>
+        <div class="legend-row"><div class="legend-dot" style="background:var(--type-byo);"></div> Holiday w/ horse</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const listings = {
+    '1': { type:'multiday', typeLabel:'● Multi-day trek', title:"4-day cattleman's trail trek & camp", region:'📍 Victorian High Country, VIC', price:'$1,180 <small>/ person</small>', rating:'★ 4.8', plate:'p3' },
+    '2': { type:'day', typeLabel:'● Day ride', title:'Alpine ridgeline half-day trail ride', region:'📍 Snowy Mountains, NSW', price:'$145 <small>/ person</small>', rating:'★ 4.9', plate:'p1' },
+    '3': { type:'day', typeLabel:'● Day ride', title:'Full-day high plains ride with lunch stop', region:'📍 Kosciuszko NP, NSW', price:'$225 <small>/ person</small>', rating:'★ 4.7', plate:'p2' },
+    '4': { type:'accom', typeLabel:'● Accommodation', title:'Thredbo Valley horse-friendly farmstay', region:'📍 Jindabyne, NSW', price:'$110 <small>/ night</small>', rating:'★ 4.6', plate:'p4' },
+    '5': { type:'byo', typeLabel:'● Holiday w/ horse', title:'High country BYO horse retreat, 3 nights', region:'📍 Adaminaby, NSW', price:'$165 <small>/ night</small>', rating:'★ 5.0', plate:'p5' },
+    '6': { type:'day', typeLabel:'● Day ride', title:'Sunset beginner trail ride, Lake Jindabyne', region:'📍 Snowy Mountains, NSW', price:'$95 <small>/ person</small>', rating:'★ 4.8', plate:'p6' },
+    '7': { type:'accom', typeLabel:'● Accommodation', title:'Monaro Plains stables & guest cottages', region:'📍 Berridale, NSW', price:'$130 <small>/ night</small>', rating:'★ 4.9', plate:'p3' },
+  };
+
+  const popup = document.getElementById('mapPopup');
+  const popupClose = document.getElementById('popupClose');
+
+  function showPopup(pin, id) {
+    const d = listings[id];
+    if (!d) return;
+    document.getElementById('popupImg').className = 'popup-img plate ' + d.plate;
+    document.getElementById('popupType').className = 'popup-type ' + d.type;
+    document.getElementById('popupType').innerHTML = d.typeLabel;
+    document.getElementById('popupTitle').textContent = d.title;
+    document.getElementById('popupRegion').textContent = d.region;
+    document.getElementById('popupPrice').innerHTML = d.price;
+    document.getElementById('popupRating').textContent = d.rating;
+
+    const mapCanvas = document.getElementById('mapCanvas');
+    const rect = pin.getBoundingClientRect();
+    const canvasRect = mapCanvas.getBoundingClientRect();
+    let left = rect.left - canvasRect.left + rect.width / 2;
+    let top = rect.top - canvasRect.top;
+    // Keep popup within bounds
+    if (left + 260 > canvasRect.width - 10) left = canvasRect.width - 270;
+    if (left < 10) left = 10;
+    if (top - 260 < 10) top = top + 40;
+    else top = top - 10;
+
+    popup.style.left = left + 'px';
+    popup.style.top = top + 'px';
+    popup.style.transform = top < rect.top - canvasRect.top ? 'translateY(-100%)' : 'none';
+    popup.classList.add('visible');
+  }
+
+  function setActive(id) {
+    document.querySelectorAll('.pin').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.result-card').forEach(c => c.classList.remove('active'));
+    const pin = document.querySelector(`.pin[data-pin="${id}"]`);
+    const card = document.querySelector(`.result-card[data-pin="${id}"]`);
+    if (pin) pin.classList.add('active');
+    if (card) { card.classList.add('active'); card.scrollIntoView({ behavior:'smooth', block:'nearest' }); }
+  }
+
+  // Pin clicks
+  document.querySelectorAll('.pin').forEach(pin => {
+    pin.addEventListener('click', e => {
+      e.stopPropagation();
+      const id = pin.dataset.pin;
+      setActive(id);
+      if (listings[id]) showPopup(pin, id);
+    });
+  });
+
+  // Card clicks
+  document.querySelectorAll('.result-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.dataset.pin;
+      setActive(id);
+      const pin = document.querySelector(`.pin[data-pin="${id}"]`);
+      if (pin && listings[id]) showPopup(pin, id);
+    });
+  });
+
+  // Close popup
+  popupClose.addEventListener('click', () => popup.classList.remove('visible'));
+  document.getElementById('mapCanvas').addEventListener('click', e => {
+    if (!e.target.closest('.pin') && !e.target.closest('.map-popup')) {
+      popup.classList.remove('visible');
+    }
+  });
+</script>
+
+</body>
+</html>
