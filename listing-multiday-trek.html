@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mane Escape — 4-Day Cattleman's Trail Trek &amp; Camp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ironbark:#2C3A2A; --ironbark-light:#4A5C43; --gumleaf:#6B8C5A; --gumleaf-light:#A8C894;
+    --sandy-clay:#E8E0CC; --sandy-clay-light:#F5F0E8; --cream:#FDFAF4; --wattle:#BA7517; --amber-light:#FAEEDA;
+    --type-multiday:#7F77DD; --type-multiday-light:#EAE8FB;
+    --type-day:#1D9E75; --type-accom:#BA7517; --type-byo:#D85A30;
+    --text-primary:var(--ironbark); --text-secondary:var(--ironbark-light); --text-tertiary:#8A9484;
+    --radius-sm:6px; --radius-md:10px; --radius-lg:18px;
+    --shadow-card: 0 2px 10px rgba(44,58,42,0.08), 0 1px 2px rgba(44,58,42,0.06);
+    --shadow-lift: 0 12px 28px rgba(44,58,42,0.16);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ font-family:'DM Sans', sans-serif; background:var(--cream); color:var(--text-primary); line-height:1.6; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,h4{ font-family:'Playfair Display', serif; font-weight:500; color:var(--ironbark); line-height:1.25; }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:none; }
+  .wrap{ max-width:1320px; margin:0 auto; padding:0 40px; }
+
+  .plate{ background-size:cover; background-position:center; }
+  .plate.p1{ background-image: linear-gradient(155deg,#7c76c9 0%, #3a3568 100%); }
+  .plate.p2{ background-image: linear-gradient(155deg,#5c6b45 0%, #26301f 100%); }
+  .plate.p3{ background-image: linear-gradient(160deg,#b98f52 0%, #4a3a22 100%); }
+  .plate.p4{ background-image: linear-gradient(160deg,#8fae7c 0%, #3c4a30 100%); }
+  .plate.p5{ background-image: linear-gradient(150deg,#6f8062 0%, #445238 100%); }
+  .plate.p6{ background-image: linear-gradient(150deg,#9186d4 0%, #4a4380 100%); }
+
+  header{ background:var(--cream); border-bottom:1px solid rgba(44,58,42,0.08); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; height:70px; }
+  .logo{ display:flex; align-items:center; gap:10px; }
+  .logo-mark{ width:30px; height:30px; border-radius:50%; background:var(--ironbark); display:flex; align-items:center; justify-content:center; color:var(--sandy-clay-light); font-family:'Playfair Display'; font-size:15px; }
+  .logo-text{ font-family:'Playfair Display'; font-size:18px; font-weight:600; }
+  .logo-text span{ color:var(--gumleaf); }
+  nav.primary{ display:flex; gap:30px; }
+  nav.primary a{ font-size:14px; font-weight:500; color:var(--text-secondary); }
+  .btn{ font-size:13px; font-weight:700; padding:9px 18px; border-radius:24px; }
+  .btn-primary{ background:var(--ironbark); color:var(--cream); }
+
+  .breadcrumb{ font-size:12.5px; color:var(--text-tertiary); padding:20px 0 0; }
+  .breadcrumb a{ color:var(--text-tertiary); }
+  .breadcrumb span{ color:var(--ironbark); font-weight:600; }
+
+  .gallery{ display:grid; grid-template-columns: 1.6fr 1fr; gap:10px; height:420px; margin:20px 0 28px; border-radius:var(--radius-lg); overflow:hidden; }
+  .gallery .sub-shots{ display:grid; grid-template-rows:1fr 1fr; gap:10px; }
+  .gallery .sub-shots .plate{ position:relative; }
+  .photo-count{ position:absolute; bottom:16px; right:16px; background:rgba(44,58,42,0.75); color:#fff; font-size:12px; font-weight:700; padding:7px 14px; border-radius:20px; }
+
+  .listing-header{ display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:20px; }
+  .type-tag{ display:inline-flex; align-items:center; gap:6px; font-size:10.5px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; padding:5px 13px; border-radius:20px; color:#fff; background:var(--type-multiday); margin-bottom:12px; }
+  .listing-header h1{ font-size:32px; margin-bottom:10px; max-width:640px; }
+  .header-meta{ display:flex; align-items:center; gap:16px; font-size:13.5px; color:var(--text-secondary); }
+  .header-meta .rating{ font-weight:700; color:var(--ironbark); }
+  .fav-share{ display:flex; gap:10px; }
+  .fav-share button{ display:flex; align-items:center; gap:7px; font-size:13px; font-weight:600; color:var(--ironbark); border:1.5px solid var(--sandy-clay); padding:9px 15px; border-radius:24px; }
+
+  .quick-stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--sandy-clay); border-radius:var(--radius-md); overflow:hidden; margin-bottom:40px; }
+  .stat{ background:var(--sandy-clay-light); padding:18px 20px; }
+  .stat .label{ font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-tertiary); margin-bottom:6px; }
+  .stat .value{ font-size:16px; font-weight:700; color:var(--ironbark); }
+
+  .detail-layout{ display:grid; grid-template-columns: 1fr 360px; gap:56px; padding-bottom:80px; }
+  .main-col section{ margin-bottom:44px; padding-bottom:44px; border-bottom:1px solid var(--sandy-clay); }
+  .main-col section:last-child{ border-bottom:none; }
+  .main-col h2{ font-size:22px; margin-bottom:16px; }
+  .main-col p{ font-size:14.5px; color:var(--text-secondary); max-width:620px; }
+
+  .itinerary{ display:flex; flex-direction:column; margin-top:16px; }
+  .itin-day{ display:grid; grid-template-columns: 90px 1fr; gap:20px; padding:20px 0; border-left:2px solid var(--sandy-clay); margin-left:14px; padding-left:26px; position:relative; }
+  .itin-day::before{ content:''; position:absolute; left:-8px; top:24px; width:14px; height:14px; border-radius:50%; background:var(--type-multiday); border:3px solid var(--cream); }
+  .itin-day:last-child{ border-left:2px solid transparent; }
+  .itin-num{ font-family:'Playfair Display'; font-size:26px; color:var(--type-multiday); font-weight:600; }
+  .itin-num small{ display:block; font-family:'DM Sans'; font-size:10.5px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.04em; margin-top:2px; }
+  .itin-content h5{ font-size:16px; margin-bottom:8px; }
+  .itin-content p{ font-size:13.5px; color:var(--text-secondary); margin-bottom:8px; }
+  .itin-meta{ display:flex; gap:14px; font-size:11.5px; color:var(--text-tertiary); font-weight:600; }
+
+  .incl-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:16px; }
+  .incl-col h5{ font-size:13.5px; font-weight:700; margin-bottom:12px; }
+  .incl-col ul{ list-style:none; display:flex; flex-direction:column; gap:9px; }
+  .incl-col li{ font-size:13.5px; color:var(--text-secondary); display:flex; align-items:flex-start; gap:9px; }
+  .incl-col li::before{ content:'✓'; color:var(--type-multiday); font-weight:700; flex-shrink:0; }
+  .incl-col.exclude li::before{ content:'—'; color:var(--text-tertiary); }
+
+  .bring-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:16px; }
+  .bring-item{ text-align:center; background:var(--sandy-clay-light); border-radius:var(--radius-md); padding:16px 10px; }
+  .bring-item .icon{ font-size:22px; margin-bottom:8px; }
+  .bring-item .label{ font-size:12px; font-weight:600; color:var(--text-secondary); }
+
+  .horse-details{ display:flex; gap:24px; margin-top:16px; }
+  .horse-stat{ background:var(--sandy-clay-light); border-radius:var(--radius-md); padding:16px 22px; flex:1; }
+  .horse-stat .label{ font-size:10.5px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); margin-bottom:6px; }
+  .horse-stat .value{ font-size:14.5px; font-weight:700; color:var(--ironbark); }
+
+  .logistics-list{ margin-top:16px; display:flex; flex-direction:column; gap:10px; }
+  .logistics-list .row{ display:flex; gap:10px; font-size:13.5px; color:var(--text-secondary); }
+  .logistics-list .row strong{ color:var(--ironbark); min-width:150px; flex-shrink:0; }
+
+  .location-map{ height:260px; border-radius:var(--radius-md); margin-top:16px; position:relative; overflow:hidden;
+    background:linear-gradient(160deg,#8fae7c 0%,#3c4a30 100%); }
+  .location-map .pin-marker{ position:absolute; top:50%; left:50%; width:30px; height:30px; border-radius:50% 50% 50% 0; background:var(--type-multiday); transform:rotate(-45deg); border:2.5px solid var(--cream); }
+
+  .operator-card{ background:var(--sandy-clay-light); border-radius:var(--radius-md); padding:18px; display:flex; gap:14px; align-items:center; margin-top:16px; }
+  .operator-avatar{ width:50px; height:50px; border-radius:50%; background:var(--ironbark); color:var(--cream); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display'; font-size:18px; flex-shrink:0; }
+  .operator-card h5{ font-size:14.5px; margin-bottom:3px; }
+  .operator-card .sub{ font-size:12px; color:var(--text-tertiary); }
+
+  .sidebar{ position:sticky; top:24px; align-self:start; }
+  .booking-card{ background:var(--cream); border:1.5px solid var(--sandy-clay); border-radius:var(--radius-lg); padding:24px; box-shadow:var(--shadow-card); }
+  .booking-price{ display:flex; align-items:baseline; gap:6px; margin-bottom:4px; }
+  .booking-price .amount{ font-size:26px; font-weight:700; color:var(--ironbark); font-family:'Playfair Display'; }
+  .booking-price .unit{ font-size:13px; color:var(--text-tertiary); }
+  .booking-rating{ font-size:12.5px; color:var(--text-secondary); margin-bottom:20px; font-weight:600; }
+
+  .departures-heading{ font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-tertiary); margin-bottom:12px; }
+  .dep-card{ border:1.5px solid var(--sandy-clay); border-radius:10px; padding:14px; margin-bottom:10px; cursor:pointer; }
+  .dep-card.selected{ border-color:var(--type-multiday); background:var(--type-multiday-light); }
+  .dep-card .dates{ font-size:14px; font-weight:700; color:var(--ironbark); margin-bottom:6px; }
+  .dep-card .spots-row{ display:flex; justify-content:space-between; align-items:center; }
+  .spots-left{ font-size:11.5px; font-weight:700; color:var(--type-day); }
+  .spots-left.low{ color:var(--type-byo); }
+
+  .enquire-btn{ width:100%; background:var(--type-multiday); color:#fff; padding:14px; border-radius:10px; font-size:14.5px; font-weight:700; margin-top:8px; }
+  .enquire-btn:hover{ opacity:0.92; }
+  .no-commitment{ text-align:center; font-size:11.5px; color:var(--text-tertiary); margin-top:10px; }
+
+  .also-like{ margin-top:20px; }
+  .also-like h5{ font-size:13px; font-weight:700; margin-bottom:12px; }
+  .also-card{ display:flex; gap:12px; background:var(--sandy-clay-light); border-radius:var(--radius-sm); padding:10px; margin-bottom:10px; }
+  .also-thumb{ width:56px; height:56px; border-radius:7px; flex-shrink:0; }
+  .also-card h6{ font-size:12.5px; font-weight:700; color:var(--ironbark); line-height:1.3; margin-bottom:3px; }
+  .also-card .price{ font-size:11.5px; color:var(--text-tertiary); }
+
+  @media (max-width:1080px){ .detail-layout{ grid-template-columns:1fr; } .gallery{ height:auto; grid-template-columns:1fr; } .sidebar{ position:static; } .incl-grid, .bring-grid{ grid-template-columns:1fr 1fr; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-row">
+    <a href="index.html" class="logo">
+      <div class="logo-mark">M</div>
+      <div class="logo-text">Mane <span>Escape</span></div>
+    </a>
+    <nav class="primary">
+      <a href="index.html">Discover</a>
+      <a href="#">Trip Map</a>
+      <a href="#">Guides</a>
+      <a href="#">About</a>
+    </nav>
+    <a href="#" class="btn btn-primary">Sign in</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="breadcrumb"><a href="index.html">Discover</a> / <a href="search.html">Victorian High Country</a> / <a href="search.html">Multi-day treks</a> / <span>4-day cattleman's trail trek &amp; camp</span></div>
+
+  <div class="gallery">
+    <div class="main-shot plate p1" style="position:relative;"><div class="photo-count">📷 View all 18 photos</div></div>
+    <div class="sub-shots">
+      <div class="plate p2"></div>
+      <div class="plate p6"></div>
+    </div>
+  </div>
+
+  <div class="listing-header">
+    <div>
+      <div class="type-tag">● Multi-day trek</div>
+      <h1>4-day cattleman's trail trek &amp; camp</h1>
+      <div class="header-meta">
+        <span class="rating">★ 4.8</span>
+        <span>(62 reviews)</span>
+        <span>·</span>
+        <span>📍 Victorian High Country, VIC</span>
+      </div>
+    </div>
+    <div class="fav-share">
+      <button>♡ Save</button>
+      <button>↗ Share</button>
+    </div>
+  </div>
+
+  <div class="quick-stats">
+    <div class="stat"><div class="label">Duration</div><div class="value">4 days / 3 nights</div></div>
+    <div class="stat"><div class="label">Group size</div><div class="value">6–12 riders</div></div>
+    <div class="stat"><div class="label">Experience</div><div class="value">Beginner-friendly</div></div>
+    <div class="stat"><div class="label">Horse</div><div class="value">Supplied</div></div>
+  </div>
+
+  <div class="detail-layout">
+    <div class="main-col">
+
+      <section>
+        <h2>About this trek</h2>
+        <p>Follow the historic cattlemen's trails through Victoria's high plains — the same routes made famous in "The Man from Snowy River." Four days of riding through eucalypt forest, alpine grassland and river valleys, camping under the stars each night with a fully supported pack team handling gear, meals and horse care. No prior overnight riding experience needed.</p>
+      </section>
+
+      <section>
+        <h2>Day-by-day itinerary</h2>
+        <div class="itinerary">
+          <div class="itin-day">
+            <div class="itin-num">1<small>Day</small></div>
+            <div class="itin-content">
+              <h5>Base camp to Bluff River</h5>
+              <p>Meet at base camp for horse allocation and a safety briefing, then ride 14km through open grassland to our first riverside camp.</p>
+              <div class="itin-meta"><span>🐎 14km</span><span>⛰️ Easy–moderate</span></div>
+            </div>
+          </div>
+          <div class="itin-day">
+            <div class="itin-num">2<small>Day</small></div>
+            <div class="itin-content">
+              <h5>Bluff River to High Plains</h5>
+              <p>Climb onto the high plains proper — the longest and most spectacular day, with sweeping views across the Alpine National Park.</p>
+              <div class="itin-meta"><span>🐎 22km</span><span>⛰️ Moderate</span></div>
+            </div>
+          </div>
+          <div class="itin-day">
+            <div class="itin-num">3<small>Day</small></div>
+            <div class="itin-content">
+              <h5>Rest day &amp; ridge exploration</h5>
+              <p>Optional half-day ride to Mt Feathertop lookout, or rest at camp. Campfire dinner with the guiding team.</p>
+              <div class="itin-meta"><span>🐎 Optional 10km</span><span>⛰️ Easy</span></div>
+            </div>
+          </div>
+          <div class="itin-day">
+            <div class="itin-num">4<small>Day</small></div>
+            <div class="itin-content">
+              <h5>Return to base camp</h5>
+              <p>Ride back down through the valley to base camp, arriving early afternoon in time for departure.</p>
+              <div class="itin-meta"><span>🐎 16km</span><span>⛰️ Easy–moderate</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>What's included</h2>
+        <div class="incl-grid">
+          <div class="incl-col">
+            <h5>Included</h5>
+            <ul>
+              <li>Horse, tack &amp; helmet for full trek</li>
+              <li>All meals &amp; camp catering</li>
+              <li>Tent &amp; swag hire</li>
+              <li>Pack support &amp; gear transport</li>
+              <li>Experienced trail guides (1:4 ratio)</li>
+            </ul>
+          </div>
+          <div class="incl-col exclude">
+            <h5>Not included</h5>
+            <ul>
+              <li>Transport to/from base camp</li>
+              <li>Personal riding gear</li>
+              <li>Travel insurance</li>
+              <li>Alcoholic beverages</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>What to bring</h2>
+        <div class="bring-grid">
+          <div class="bring-item"><div class="icon">🎒</div><div class="label">Small overnight bag</div></div>
+          <div class="bring-item"><div class="icon">🧥</div><div class="label">Warm layers</div></div>
+          <div class="bring-item"><div class="icon">🔦</div><div class="label">Head torch</div></div>
+          <div class="bring-item"><div class="icon">🥾</div><div class="label">Riding boots</div></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Your horse</h2>
+        <p style="margin-bottom:12px;">Sturdy, trail-hardened stock horses matched to your riding experience and weight for the full four days.</p>
+        <div class="horse-details">
+          <div class="horse-stat"><div class="label">Rider weight limit</div><div class="value">Up to 100kg</div></div>
+          <div class="horse-stat"><div class="label">Min. age</div><div class="value">14 years</div></div>
+          <div class="horse-stat"><div class="label">Fitness required</div><div class="value">Moderate</div></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Logistics</h2>
+        <div class="logistics-list">
+          <div class="row"><strong>Meeting point</strong> Base camp, Mount Beauty — 3.5hrs from Melbourne</div>
+          <div class="row"><strong>Group size</strong> Minimum 6, maximum 12 riders</div>
+          <div class="row"><strong>Weather policy</strong> Treks proceed in most conditions; rescheduled only for extreme weather or total fire ban</div>
+          <div class="row"><strong>Cancellation</strong> Full refund 14+ days before departure, 50% within 14 days</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Location</h2>
+        <div class="location-map"><div class="pin-marker"></div></div>
+        <p style="margin-top:12px;">Mount Beauty Base Camp, Alpine National Park, VIC 3699.</p>
+      </section>
+
+      <section style="border-bottom:none;">
+        <h2>Operator</h2>
+        <div class="operator-card">
+          <div class="operator-avatar">HC</div>
+          <div><h5>High Country Trail Treks</h5><div class="sub">Hosting since 2009 · 210 treks completed</div></div>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="sidebar">
+      <div class="booking-card">
+        <div class="booking-price"><span class="amount">$1,180</span><span class="unit">/ person</span></div>
+        <div class="booking-rating">★ 4.8 · 62 reviews</div>
+
+        <div class="departures-heading">Upcoming departures</div>
+        <div class="dep-card selected">
+          <div class="dates">14–17 Mar 2026</div>
+          <div class="spots-row"><span style="font-size:12px; color:var(--text-tertiary);">4 days / 3 nights</span><span class="spots-left">5 spots left</span></div>
+        </div>
+        <div class="dep-card">
+          <div class="dates">11–14 Apr 2026</div>
+          <div class="spots-row"><span style="font-size:12px; color:var(--text-tertiary);">4 days / 3 nights</span><span class="spots-left low">2 spots left</span></div>
+        </div>
+        <div class="dep-card">
+          <div class="dates">9–12 May 2026</div>
+          <div class="spots-row"><span style="font-size:12px; color:var(--text-tertiary);">4 days / 3 nights</span><span class="spots-left">9 spots left</span></div>
+        </div>
+
+        <button class="enquire-btn">Send enquiry</button>
+        <div class="no-commitment">No booking commitment — operator confirms availability</div>
+      </div>
+
+      <div class="also-like">
+        <h5>You may also like</h5>
+        <div class="also-card">
+          <div class="also-thumb plate p2"></div>
+          <div><h6><a href="listing-day-ride.html">Alpine ridgeline half-day trail ride</a></h6><div class="price">$145 / person</div></div>
+        </div>
+        <div class="also-card">
+          <div class="also-thumb plate p3"></div>
+          <div><h6><a href="listing-accommodation.html">Thredbo Valley horse-friendly farmstay</a></h6><div class="price">$110 / night</div></div>
+        </div>
+        <div class="also-card">
+          <div class="also-thumb plate p6"></div>
+          <div><h6><a href="listing-byo-holiday.html">High country BYO horse retreat, 3 nights</a></h6><div class="price">$165 / night</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

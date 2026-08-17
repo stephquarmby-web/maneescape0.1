@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mane Escape — Alpine Ridgeline Half-Day Trail Ride</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ironbark:#2C3A2A; --ironbark-light:#4A5C43; --gumleaf:#6B8C5A; --gumleaf-light:#A8C894;
+    --sandy-clay:#E8E0CC; --sandy-clay-light:#F5F0E8; --cream:#FDFAF4; --wattle:#BA7517; --amber-light:#FAEEDA;
+    --type-day:#1D9E75; --type-day-light:#DFF3EB;
+    --type-multiday:#7F77DD; --type-accom:#BA7517; --type-byo:#D85A30;
+    --text-primary:var(--ironbark); --text-secondary:var(--ironbark-light); --text-tertiary:#8A9484;
+    --radius-sm:6px; --radius-md:10px; --radius-lg:18px;
+    --shadow-card: 0 2px 10px rgba(44,58,42,0.08), 0 1px 2px rgba(44,58,42,0.06);
+    --shadow-lift: 0 12px 28px rgba(44,58,42,0.16);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ font-family:'DM Sans', sans-serif; background:var(--cream); color:var(--text-primary); line-height:1.6; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,h4{ font-family:'Playfair Display', serif; font-weight:500; color:var(--ironbark); line-height:1.25; }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:none; }
+  .wrap{ max-width:1320px; margin:0 auto; padding:0 40px; }
+
+  .plate{ background-size:cover; background-position:center; }
+  .plate.p1{ background-image: linear-gradient(155deg,#5c6b45 0%, #26301f 100%); }
+  .plate.p2{ background-image: linear-gradient(155deg,#7a8f6a 0%, #2c3a2a 100%); }
+  .plate.p3{ background-image: linear-gradient(160deg,#b98f52 0%, #4a3a22 100%); }
+  .plate.p4{ background-image: linear-gradient(160deg,#8fae7c 0%, #3c4a30 100%); }
+  .plate.p5{ background-image: linear-gradient(150deg,#6f8062 0%, #445238 100%); }
+
+  header{ background:var(--cream); border-bottom:1px solid rgba(44,58,42,0.08); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; height:70px; }
+  .logo{ display:flex; align-items:center; gap:10px; }
+  .logo-mark{ width:30px; height:30px; border-radius:50%; background:var(--ironbark); display:flex; align-items:center; justify-content:center; color:var(--sandy-clay-light); font-family:'Playfair Display'; font-size:15px; }
+  .logo-text{ font-family:'Playfair Display'; font-size:18px; font-weight:600; }
+  .logo-text span{ color:var(--gumleaf); }
+  nav.primary{ display:flex; gap:30px; }
+  nav.primary a{ font-size:14px; font-weight:500; color:var(--text-secondary); }
+  .btn{ font-size:13px; font-weight:700; padding:9px 18px; border-radius:24px; }
+  .btn-primary{ background:var(--ironbark); color:var(--cream); }
+
+  .breadcrumb{ font-size:12.5px; color:var(--text-tertiary); padding:20px 0 0; }
+  .breadcrumb a{ color:var(--text-tertiary); }
+  .breadcrumb span{ color:var(--ironbark); font-weight:600; }
+
+  .gallery{ display:grid; grid-template-columns: 1.6fr 1fr; gap:10px; height:420px; margin:20px 0 28px; border-radius:var(--radius-lg); overflow:hidden; }
+  .gallery .main-shot{ height:100%; }
+  .gallery .sub-shots{ display:grid; grid-template-rows:1fr 1fr; gap:10px; }
+  .gallery .sub-shots .plate{ position:relative; }
+  .photo-count{ position:absolute; bottom:16px; right:16px; background:rgba(44,58,42,0.75); color:#fff; font-size:12px; font-weight:700; padding:7px 14px; border-radius:20px; }
+
+  .listing-header{ display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:20px; }
+  .type-tag{ display:inline-flex; align-items:center; gap:6px; font-size:10.5px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; padding:5px 13px; border-radius:20px; color:#fff; background:var(--type-day); margin-bottom:12px; }
+  .listing-header h1{ font-size:32px; margin-bottom:10px; max-width:640px; }
+  .header-meta{ display:flex; align-items:center; gap:16px; font-size:13.5px; color:var(--text-secondary); }
+  .header-meta .rating{ font-weight:700; color:var(--ironbark); }
+  .fav-share{ display:flex; gap:10px; }
+  .fav-share button{ display:flex; align-items:center; gap:7px; font-size:13px; font-weight:600; color:var(--ironbark); border:1.5px solid var(--sandy-clay); padding:9px 15px; border-radius:24px; }
+
+  .quick-stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--sandy-clay); border-radius:var(--radius-md); overflow:hidden; margin-bottom:40px; }
+  .stat{ background:var(--sandy-clay-light); padding:18px 20px; }
+  .stat .label{ font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-tertiary); margin-bottom:6px; }
+  .stat .value{ font-size:16px; font-weight:700; color:var(--ironbark); }
+
+  .detail-layout{ display:grid; grid-template-columns: 1fr 360px; gap:56px; padding-bottom:80px; }
+  .main-col section{ margin-bottom:44px; padding-bottom:44px; border-bottom:1px solid var(--sandy-clay); }
+  .main-col section:last-child{ border-bottom:none; }
+  .main-col h2{ font-size:22px; margin-bottom:16px; }
+  .main-col p{ font-size:14.5px; color:var(--text-secondary); max-width:620px; }
+
+  .level-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:16px; }
+  .level-card{ background:var(--sandy-clay-light); border-radius:var(--radius-md); padding:18px; }
+  .level-card .dot{ width:10px; height:10px; border-radius:50%; background:var(--type-day); margin-bottom:10px; }
+  .level-card h5{ font-size:14.5px; font-weight:700; color:var(--ironbark); margin-bottom:6px; }
+  .level-card p{ font-size:12.5px; color:var(--text-secondary); }
+
+  .departure-list{ display:flex; flex-direction:column; gap:12px; margin-top:16px; }
+  .departure-row{ display:flex; align-items:center; justify-content:space-between; background:var(--sandy-clay-light); border-radius:var(--radius-md); padding:16px 20px; border:1.5px solid transparent; }
+  .departure-row.selected{ border-color:var(--type-day); background:var(--type-day-light); }
+  .departure-left{ display:flex; align-items:center; gap:16px; }
+  .departure-time{ font-size:16px; font-weight:700; color:var(--ironbark); min-width:70px; }
+  .departure-tag{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.03em; color:var(--type-day); background:rgba(29,158,117,0.12); padding:4px 10px; border-radius:14px; }
+  .departure-sub{ font-size:12.5px; color:var(--text-tertiary); }
+  .departure-price{ font-size:15px; font-weight:700; }
+
+  .inclusions-split{ display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:16px; }
+  .incl-col h5{ font-size:13.5px; font-weight:700; margin-bottom:12px; }
+  .incl-col ul{ list-style:none; display:flex; flex-direction:column; gap:9px; }
+  .incl-col li{ font-size:13.5px; color:var(--text-secondary); display:flex; align-items:flex-start; gap:9px; }
+  .incl-col li::before{ content:'✓'; color:var(--type-day); font-weight:700; flex-shrink:0; }
+
+  .wear-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:16px; }
+  .wear-item{ text-align:center; background:var(--sandy-clay-light); border-radius:var(--radius-md); padding:16px 10px; }
+  .wear-item .icon{ font-size:22px; margin-bottom:8px; }
+  .wear-item .label{ font-size:12px; font-weight:600; color:var(--text-secondary); }
+
+  .horse-details{ display:flex; gap:24px; margin-top:16px; }
+  .horse-stat{ background:var(--sandy-clay-light); border-radius:var(--radius-md); padding:16px 22px; flex:1; }
+  .horse-stat .label{ font-size:10.5px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); margin-bottom:6px; }
+  .horse-stat .value{ font-size:14.5px; font-weight:700; color:var(--ironbark); }
+
+  .transfer-note{ background:var(--amber-light); border-radius:var(--radius-md); padding:18px 20px; margin-top:16px; display:flex; gap:14px; align-items:flex-start; }
+  .transfer-note .icon{ font-size:20px; }
+  .transfer-note p{ font-size:13.5px; color:var(--ironbark-light); }
+
+  .policy-list{ margin-top:16px; display:flex; flex-direction:column; gap:10px; }
+  .policy-list .row{ display:flex; gap:10px; font-size:13.5px; color:var(--text-secondary); }
+  .policy-list .row strong{ color:var(--ironbark); min-width:130px; flex-shrink:0; }
+
+  .location-map{ height:260px; border-radius:var(--radius-md); margin-top:16px; position:relative; overflow:hidden;
+    background:linear-gradient(160deg,#8fae7c 0%,#3c4a30 100%); }
+  .location-map .pin-marker{ position:absolute; top:50%; left:50%; width:30px; height:30px; border-radius:50% 50% 50% 0; background:var(--type-day); transform:rotate(-45deg); border:2.5px solid var(--cream); }
+
+  .operator-card{ background:var(--sandy-clay-light); border-radius:var(--radius-md); padding:18px; display:flex; gap:14px; align-items:center; margin-top:16px; }
+  .operator-avatar{ width:50px; height:50px; border-radius:50%; background:var(--ironbark); color:var(--cream); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display'; font-size:18px; flex-shrink:0; }
+  .operator-card h5{ font-size:14.5px; margin-bottom:3px; }
+  .operator-card .sub{ font-size:12px; color:var(--text-tertiary); }
+
+  .sidebar{ position:sticky; top:24px; align-self:start; }
+  .booking-card{ background:var(--cream); border:1.5px solid var(--sandy-clay); border-radius:var(--radius-lg); padding:24px; box-shadow:var(--shadow-card); }
+  .booking-price{ display:flex; align-items:baseline; gap:6px; margin-bottom:4px; }
+  .booking-price .amount{ font-size:26px; font-weight:700; color:var(--ironbark); font-family:'Playfair Display'; }
+  .booking-price .unit{ font-size:13px; color:var(--text-tertiary); }
+  .booking-rating{ font-size:12.5px; color:var(--text-secondary); margin-bottom:20px; font-weight:600; }
+
+  .picker-field{ margin-bottom:14px; }
+  .picker-field label{ display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-tertiary); margin-bottom:7px; }
+  .picker-control{ border:1.5px solid var(--sandy-clay); background:var(--sandy-clay-light); border-radius:9px; padding:11px 14px; font-size:14px; display:flex; justify-content:space-between; align-items:center; }
+  .rider-counter{ display:flex; align-items:center; justify-content:space-between; border:1.5px solid var(--sandy-clay); background:var(--sandy-clay-light); border-radius:9px; padding:9px 14px; }
+  .rider-counter .stepper{ display:flex; align-items:center; gap:14px; }
+  .rider-counter button{ width:26px; height:26px; border-radius:50%; background:var(--cream); border:1.5px solid var(--sandy-clay); font-size:15px; color:var(--ironbark); font-weight:700; }
+
+  .price-breakdown{ margin-top:18px; padding-top:18px; border-top:1px solid var(--sandy-clay); display:flex; flex-direction:column; gap:9px; }
+  .price-breakdown .row{ display:flex; justify-content:space-between; font-size:13.5px; color:var(--text-secondary); }
+  .price-breakdown .row.total{ font-weight:700; color:var(--ironbark); font-size:15px; padding-top:9px; border-top:1px solid var(--sandy-clay); }
+
+  .enquire-btn{ width:100%; background:var(--type-day); color:#fff; padding:14px; border-radius:10px; font-size:14.5px; font-weight:700; margin-top:18px; }
+  .enquire-btn:hover{ opacity:0.92; }
+  .no-commitment{ text-align:center; font-size:11.5px; color:var(--text-tertiary); margin-top:10px; }
+
+  .also-like{ margin-top:20px; }
+  .also-like h5{ font-size:13px; font-weight:700; margin-bottom:12px; }
+  .also-card{ display:flex; gap:12px; background:var(--sandy-clay-light); border-radius:var(--radius-sm); padding:10px; margin-bottom:10px; }
+  .also-thumb{ width:56px; height:56px; border-radius:7px; flex-shrink:0; }
+  .also-card h6{ font-size:12.5px; font-weight:700; color:var(--ironbark); line-height:1.3; margin-bottom:3px; }
+  .also-card .price{ font-size:11.5px; color:var(--text-tertiary); }
+
+  @media (max-width:1080px){ .detail-layout{ grid-template-columns:1fr; } .gallery{ height:auto; grid-template-columns:1fr; } .sidebar{ position:static; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-row">
+    <a href="index.html" class="logo">
+      <div class="logo-mark">M</div>
+      <div class="logo-text">Mane <span>Escape</span></div>
+    </a>
+    <nav class="primary">
+      <a href="index.html">Discover</a>
+      <a href="#">Trip Map</a>
+      <a href="#">Guides</a>
+      <a href="#">About</a>
+    </nav>
+    <a href="#" class="btn btn-primary">Sign in</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="breadcrumb"><a href="index.html">Discover</a> / <a href="search.html">Snowy Mountains</a> / <a href="search.html">Day rides</a> / <span>Alpine ridgeline half-day trail ride</span></div>
+
+  <div class="gallery">
+    <div class="main-shot plate p1" style="position:relative;">
+      <div class="photo-count">📷 View all 12 photos</div>
+    </div>
+    <div class="sub-shots">
+      <div class="plate p2"></div>
+      <div class="plate p3"></div>
+    </div>
+  </div>
+
+  <div class="listing-header">
+    <div>
+      <div class="type-tag">● Day ride</div>
+      <h1>Alpine ridgeline half-day trail ride</h1>
+      <div class="header-meta">
+        <span class="rating">★ 4.9</span>
+        <span>(184 reviews)</span>
+        <span>·</span>
+        <span>📍 Snowy Mountains, NSW</span>
+      </div>
+    </div>
+    <div class="fav-share">
+      <button>♡ Save</button>
+      <button>↗ Share</button>
+    </div>
+  </div>
+
+  <div class="quick-stats">
+    <div class="stat"><div class="label">Duration</div><div class="value">Half day · 3 hrs</div></div>
+    <div class="stat"><div class="label">Group size</div><div class="value">Up to 8 riders</div></div>
+    <div class="stat"><div class="label">Experience</div><div class="value">Beginner–Intermediate</div></div>
+    <div class="stat"><div class="label">Horse</div><div class="value">Supplied</div></div>
+  </div>
+
+  <div class="detail-layout">
+    <div class="main-col">
+
+      <section>
+        <h2>About this ride</h2>
+        <p>Climb out of Jindabyne along the alpine ridgeline for sweeping views across the Snowy Mountains high country. Our sure-footed mountain horses are matched to your experience level, and small group sizes mean plenty of one-on-one time with your guide. Suitable for beginners, with an optional canter section for more confident riders.</p>
+      </section>
+
+      <section>
+        <h2>Experience levels</h2>
+        <div class="level-grid">
+          <div class="level-card"><div class="dot"></div><h5>Beginner</h5><p>Walk-pace throughout, full instruction provided. No prior riding needed.</p></div>
+          <div class="level-card"><div class="dot"></div><h5>Intermediate</h5><p>Comfortable at walk and trot independently. Some trail experience helpful.</p></div>
+          <div class="level-card"><div class="dot"></div><h5>Advanced</h5><p>Confident at canter on varied terrain. Optional faster-paced group.</p></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Departure times</h2>
+        <div class="departure-list">
+          <div class="departure-row selected">
+            <div class="departure-left">
+              <div class="departure-time">8:00 AM</div>
+              <div class="departure-tag">Half day</div>
+              <div class="departure-sub">3 hours · 4 spots left</div>
+            </div>
+            <div class="departure-price">$145</div>
+          </div>
+          <div class="departure-row">
+            <div class="departure-left">
+              <div class="departure-time">1:00 PM</div>
+              <div class="departure-tag">Half day</div>
+              <div class="departure-sub">3 hours · 7 spots left</div>
+            </div>
+            <div class="departure-price">$145</div>
+          </div>
+          <div class="departure-row">
+            <div class="departure-left">
+              <div class="departure-time">7:00 AM</div>
+              <div class="departure-tag">Full day</div>
+              <div class="departure-sub">6 hours, incl. lunch · 2 spots left</div>
+            </div>
+            <div class="departure-price">$255</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>What's included</h2>
+        <div class="inclusions-split">
+          <div class="incl-col">
+            <h5>Half-day rides</h5>
+            <ul>
+              <li>Mountain horse &amp; tack</li>
+              <li>Helmet &amp; safety gear</li>
+              <li>Guide (1 per 4 riders)</li>
+              <li>Water &amp; trail snack</li>
+            </ul>
+          </div>
+          <div class="incl-col">
+            <h5>Full-day rides</h5>
+            <ul>
+              <li>Everything in half-day, plus:</li>
+              <li>Packed lunch at ridge lookout</li>
+              <li>Extended high-country loop</li>
+              <li>Photo stop at Mt Kosciuszko lookout</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>What to wear</h2>
+        <div class="wear-grid">
+          <div class="wear-item"><div class="icon">👖</div><div class="label">Long pants</div></div>
+          <div class="wear-item"><div class="icon">🥾</div><div class="label">Closed shoes, small heel</div></div>
+          <div class="wear-item"><div class="icon">🧥</div><div class="label">Weatherproof layer</div></div>
+          <div class="wear-item"><div class="icon">☀️</div><div class="label">Sun protection</div></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Your horse</h2>
+        <p style="margin-bottom:12px;">All horses are hand-selected mountain stock, matched to rider experience and weight on the day.</p>
+        <div class="horse-details">
+          <div class="horse-stat"><div class="label">Rider weight limit</div><div class="value">Up to 110kg</div></div>
+          <div class="horse-stat"><div class="label">Min. age</div><div class="value">8 years</div></div>
+          <div class="horse-stat"><div class="label">Horse experience</div><div class="value">Trail-trained, 5+ yrs</div></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Transfers &amp; nearby stays</h2>
+        <div class="transfer-note">
+          <div class="icon">🚐</div>
+          <p>Free pickup from Jindabyne accommodation available on request. Staying overnight? See horse-friendly stays nearby on the <a href="search-map.html" style="color:var(--ironbark); font-weight:700; text-decoration:underline;">Trip Map</a>.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Weather &amp; cancellation</h2>
+        <div class="policy-list">
+          <div class="row"><strong>Weather policy</strong> Rides proceed in light rain. Cancelled and rescheduled free of charge in severe weather or high fire danger.</div>
+          <div class="row"><strong>Cancellation</strong> Full refund up to 48 hours before departure. 50% refund within 48 hours.</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Location</h2>
+        <div class="location-map"><div class="pin-marker"></div></div>
+        <p style="margin-top:12px;">142 Alpine Way, Jindabyne NSW 2627 — meeting point at the trailhead car park.</p>
+      </section>
+
+      <section style="border-bottom:none;">
+        <h2>Operator</h2>
+        <div class="operator-card">
+          <div class="operator-avatar">SR</div>
+          <div>
+            <h5>Snowy Ridge Trail Rides</h5>
+            <div class="sub">Hosting since 2014 · 340 rides completed</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="sidebar">
+      <div class="booking-card">
+        <div class="booking-price"><span class="amount">$145</span><span class="unit">/ person</span></div>
+        <div class="booking-rating">★ 4.9 · 184 reviews</div>
+
+        <div class="picker-field">
+          <label>Date</label>
+          <div class="picker-control">Sat, 14 Mar 2026 <span>📅</span></div>
+        </div>
+        <div class="picker-field">
+          <label>Departure</label>
+          <div class="picker-control">8:00 AM · Half day <span>⌄</span></div>
+        </div>
+        <div class="picker-field">
+          <label>Riders</label>
+          <div class="rider-counter">
+            <span>2 riders</span>
+            <div class="stepper"><button>−</button><button>+</button></div>
+          </div>
+        </div>
+
+        <div class="price-breakdown">
+          <div class="row"><span>$145 × 2 riders</span><span>$290</span></div>
+          <div class="row total"><span>Estimated total</span><span>$290</span></div>
+        </div>
+
+        <button class="enquire-btn">Send enquiry</button>
+        <div class="no-commitment">No booking commitment — operator confirms availability</div>
+      </div>
+
+      <div class="also-like">
+        <h5>You may also like</h5>
+        <div class="also-card">
+          <div class="also-thumb plate p3"></div>
+          <div><h6>Sunset beginner trail ride, Lake Jindabyne</h6><div class="price">$95 / person</div></div>
+        </div>
+        <div class="also-card">
+          <div class="also-thumb plate p2"></div>
+          <div><h6>Full-day high plains ride with lunch stop</h6><div class="price">$225 / person</div></div>
+        </div>
+        <div class="also-card">
+          <div class="also-thumb plate p5"></div>
+          <div><h6><a href="listing-accommodation.html">Thredbo Valley horse-friendly farmstay</a></h6><div class="price">$110 / night</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
