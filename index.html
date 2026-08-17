@@ -1,165 +1,623 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Mane Escape — Australia's equestrian tourism marketplace. Discover trail rides, horse-friendly accommodation, and BYO horse holidays across Australia and New Zealand.">
-  <title>Mane Escape — Equestrian Tourism, Australia &amp; New Zealand</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Mane Escape — Australia's equestrian tourism marketplace. Discover trail rides, horse-friendly accommodation, and BYO horse holidays across Australia and New Zealand.">
+<title>Mane Escape — Homepage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ironbark:#2C3A2A;
+    --ironbark-light:#4A5C43;
+    --gumleaf:#6B8C5A;
+    --gumleaf-light:#A8C894;
+    --sandy-clay:#E8E0CC;
+    --sandy-clay-light:#F5F0E8;
+    --cream:#FDFAF4;
+    --wattle:#BA7517;
+    --amber-light:#FAEEDA;
+
+    --type-day:#1D9E75;
+    --type-multiday:#7F77DD;
+    --type-accom:#BA7517;
+    --type-byo:#D85A30;
+
+    --text-primary: var(--ironbark);
+    --text-secondary: var(--ironbark-light);
+    --text-tertiary: #8A9484;
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 18px;
+    --shadow-card: 0 2px 10px rgba(44,58,42,0.08), 0 1px 2px rgba(44,58,42,0.06);
+    --shadow-lift: 0 12px 28px rgba(44,58,42,0.16);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    line-height:1.5;
+  }
+  h1,h2,h3,h4{font-family:'Playfair Display', serif; font-weight:500; color:var(--ironbark); line-height:1.15;}
+  a{color:inherit; text-decoration:none;}
+  img,svg{display:block; max-width:100%;}
+  button{font-family:inherit; cursor:pointer; border:none;}
+  ul{list-style:none;}
+
+  .eyebrow{
+    font-size:9px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .wrap{ max-width:1320px; margin:0 auto; padding:0 40px; }
+
+  /* photo placeholder plates — stand in for real photography */
+  .plate{
+    position:relative; overflow:hidden; background-size:cover; background-position:center;
+    display:flex; align-items:flex-end;
+  }
+  .plate::after{
+    content: attr(data-caption);
+    position:absolute; left:14px; bottom:12px;
+    font-size:10px; letter-spacing:0.06em; text-transform:uppercase;
+    color:rgba(255,255,255,0.85); background:rgba(44,58,42,0.35);
+    padding:4px 9px; border-radius:20px; backdrop-filter: blur(3px);
+  }
+  .plate.p1{ background-image: linear-gradient(155deg,#5c6b45 0%, #3c4a30 55%, #26301f 100%); }
+  .plate.p2{ background-image: linear-gradient(155deg,#7a8f6a 0%, #4a5c43 55%, #2c3a2a 100%); }
+  .plate.p3{ background-image: linear-gradient(160deg,#b98f52 0%, #7c5c34 55%, #4a3a22 100%); }
+  .plate.p4{ background-image: linear-gradient(160deg,#9a6b4a 0%, #6b4530 55%, #402c20 100%); }
+  .plate.p5{ background-image: linear-gradient(150deg,#6f8062 0%, #445238 100%); }
+  .plate.p6{ background-image: linear-gradient(150deg,#c99a5c 0%, #8a5f34 100%); }
+
+  /* ============ HEADER ============ */
+  header{
+    position:sticky; top:0; z-index:100;
+    background: var(--cream);
+    border-bottom:1px solid rgba(44,58,42,0.08);
+  }
+  .nav-row{
+    display:flex; align-items:center; justify-content:space-between;
+    height:78px;
+  }
+  .logo{ display:flex; align-items:center; gap:10px; }
+  .logo-mark{
+    width:34px; height:34px; border-radius:50%;
+    background: var(--ironbark);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--sandy-clay-light); font-family:'Playfair Display'; font-size:17px;
+  }
+  .logo-text{ font-family:'Playfair Display'; font-size:20px; font-weight:600; letter-spacing:0.01em; }
+  .logo-text span{ color:var(--gumleaf); }
+
+  nav.primary{ display:flex; align-items:center; gap:34px; }
+  nav.primary a{
+    font-size:14.5px; font-weight:500; color:var(--text-secondary);
+    position:relative; padding:6px 0;
+  }
+  nav.primary a:hover{ color:var(--ironbark); }
+  nav.primary a.active::after{
+    content:''; position:absolute; left:0; right:0; bottom:-2px; height:2px; background:var(--gumleaf); border-radius:2px;
+  }
+
+  .nav-actions{ display:flex; align-items:center; gap:14px; }
+  .btn{
+    font-size:13.5px; font-weight:700; padding:10px 20px; border-radius:24px;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-ghost{ color:var(--ironbark); background:transparent; }
+  .btn-ghost:hover{ background: var(--sandy-clay-light); }
+  .btn-primary{ background: var(--ironbark); color:var(--cream); }
+  .btn-primary:hover{ transform: translateY(-1px); box-shadow: var(--shadow-lift); }
+  .btn-outline{
+    background:transparent; border:1.5px solid var(--ironbark); color:var(--ironbark);
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative; height:640px; margin-top:1px; overflow:hidden;
+  }
+  .hero-slides{ position:absolute; inset:0; }
+  .hero-slide{
+    position:absolute; inset:0; opacity:0; transition:opacity 1.4s ease;
+  }
+  .hero-slide.active{ opacity:1; }
+  .hero-slide .plate{ width:100%; height:100%; }
+  .hero-overlay{
+    position:absolute; inset:0;
+    background: linear-gradient(0deg, rgba(20,26,17,0.75) 0%, rgba(20,26,17,0.15) 45%, rgba(20,26,17,0.35) 100%);
+  }
+  .hero-content{
+    position:relative; z-index:2; height:100%;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding-bottom:64px;
+  }
+  .hero-eyebrow{
+    color: var(--gumleaf-light); font-size:11px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase;
+    margin-bottom:18px; display:flex; align-items:center; gap:10px;
+  }
+  .hero-eyebrow::before{ content:''; width:28px; height:1.5px; background:var(--gumleaf-light); }
+  .hero-content h1{
+    color:var(--cream); font-size:56px; max-width:680px; margin-bottom:16px; font-weight:500;
+  }
+  .hero-content p{
+    color: rgba(253,250,244,0.82); font-size:17px; max-width:480px; margin-bottom:8px;
+  }
+  .hero-dots{
+    position:absolute; right:40px; bottom:64px; z-index:3;
+    display:flex; gap:8px;
+  }
+  .hero-dot{
+    width:26px; height:3px; border-radius:2px; background:rgba(253,250,244,0.35);
+    cursor:pointer; transition: background .3s ease;
+  }
+  .hero-dot.active{ background:var(--cream); }
+
+  /* ============ SEARCH ROW 75/25 ============ */
+  .search-row{
+    display:grid; grid-template-columns: 3fr 1fr; gap:20px;
+    margin-top:-72px; position:relative; z-index:5;
+  }
+  .search-card{
+    background: var(--cream);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lift);
+    padding:28px 32px;
+  }
+  .search-card h3{ font-size:19px; margin-bottom:4px; }
+  .search-card .sub{ font-size:13.5px; color:var(--text-secondary); margin-bottom:20px; }
+  .search-fields{
+    display:grid; grid-template-columns: 1.3fr 1fr 1fr auto; gap:12px; align-items:end;
+  }
+  .field label{
+    display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--text-tertiary); margin-bottom:7px;
+  }
+  .field .control{
+    border:1.5px solid var(--sandy-clay); border-radius:10px; padding:11px 14px;
+    font-size:14px; color:var(--text-primary); background:var(--sandy-clay-light);
+  }
+  .search-fields .btn-primary{ height:44px; padding:0 26px; border-radius:10px; align-self:end; }
+
+  .trip-card{
+    background: linear-gradient(160deg, var(--ironbark) 0%, #202b1e 100%);
+    border-radius: var(--radius-lg);
+    padding:26px 26px 24px;
+    color: var(--cream);
+    display:flex; flex-direction:column; justify-content:space-between;
+    box-shadow: var(--shadow-lift);
+  }
+  .trip-card .badge{
+    display:inline-block; font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;
+    color: var(--gumleaf-light); background:rgba(168,200,148,0.15); padding:4px 10px; border-radius:20px; margin-bottom:12px;
+  }
+  .trip-card h3{ color:var(--cream); font-size:19px; margin-bottom:8px; }
+  .trip-card p{ font-size:13px; color:rgba(253,250,244,0.7); margin-bottom:18px; }
+  .trip-card .btn-outline{ color:var(--cream); border-color:rgba(253,250,244,0.4); width:100%; text-align:center; padding:11px; border-radius:10px; }
+  .trip-card .btn-outline:hover{ background:rgba(253,250,244,0.08); }
+
+  /* ============ SECTION SCAFFOLDING ============ */
+  section{ padding:88px 0; }
+  .section-head{
+    display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:36px;
+  }
+  .section-head h2{ font-size:32px; margin-top:8px; }
+  .section-head .view-all{ font-size:13.5px; font-weight:700; color:var(--gumleaf); display:flex; align-items:center; gap:6px; }
+
+  /* ============ FEATURED LISTINGS ============ */
+  .listing-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap:22px; }
+  .listing-card{
+    background:var(--cream); border-radius:var(--radius-md); overflow:hidden;
+    box-shadow: var(--shadow-card); transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .listing-card:hover{ transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+  .listing-card .plate{ height:172px; }
+  .type-tag{
+    position:absolute; top:12px; left:12px; z-index:2;
+    font-size:10px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;
+    padding:5px 11px; border-radius:20px; color:#fff;
+    display:flex; align-items:center; gap:5px;
+  }
+  .type-tag.day{ background: var(--type-day); }
+  .type-tag.multiday{ background: var(--type-multiday); }
+  .type-tag.accom{ background: var(--type-accom); }
+  .type-tag.byo{ background: var(--type-byo); }
+  .fav-btn{
+    position:absolute; top:12px; right:12px; z-index:2;
+    width:30px; height:30px; border-radius:50%; background:rgba(253,250,244,0.9);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .listing-body{ padding:16px 16px 18px; }
+  .listing-region{ font-size:11px; color:var(--text-tertiary); font-weight:600; margin-bottom:5px; display:flex; align-items:center; gap:5px;}
+  .listing-body h4{ font-size:17px; margin-bottom:8px; line-height:1.25; }
+  .listing-meta{ display:flex; align-items:center; justify-content:space-between; margin-top:12px; padding-top:12px; border-top:1px solid var(--sandy-clay-light); }
+  .listing-price{ font-size:14px; font-weight:700; }
+  .listing-price small{ font-weight:400; color:var(--text-tertiary); font-size:11.5px; }
+  .listing-rating{ font-size:12.5px; font-weight:600; color:var(--text-secondary); display:flex; align-items:center; gap:4px; }
+
+  /* ============ REGION + SIDEBAR SPLIT ============ */
+  .region-split{ display:grid; grid-template-columns: 1fr 300px; gap:60px; }
+  .region-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; }
+  .region-card{
+    position:relative; border-radius: var(--radius-md); overflow:hidden; height:190px;
+  }
+  .region-card .plate{ width:100%; height:100%; }
+  .region-card::before{
+    content:''; position:absolute; inset:0; background:linear-gradient(0deg, rgba(20,26,17,0.78) 0%, transparent 55%);
+    z-index:1;
+  }
+  .region-card .label{ position:relative; z-index:2; padding:16px; color:var(--cream); }
+  .region-card .label .count{ font-size:11px; color:rgba(253,250,244,0.75); margin-bottom:2px; }
+  .region-card .label h4{ color:var(--cream); font-size:18px; }
+
+  .sidebar-stack{ display:flex; flex-direction:column; gap:18px; }
+  .side-block{
+    background:var(--sandy-clay-light); border-radius:var(--radius-md); padding:22px;
+  }
+  .side-block h4{ font-size:15px; margin-bottom:14px; }
+  .type-list{ display:flex; flex-direction:column; gap:11px; }
+  .type-list li{ display:flex; align-items:center; gap:10px; font-size:13.5px; font-weight:500; color:var(--text-secondary); }
+  .type-dot{ width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+  .type-dot.day{ background:var(--type-day); }
+  .type-dot.multiday{ background:var(--type-multiday); }
+  .type-dot.accom{ background:var(--type-accom); }
+  .type-dot.byo{ background:var(--type-byo); }
+
+  .cta-block{
+    background: var(--ironbark); border-radius:var(--radius-md); padding:26px 22px;
+    color:var(--cream); text-align:left;
+  }
+  .cta-block .eyebrow{ color:var(--gumleaf-light); margin-bottom:10px; }
+  .cta-block h4{ color:var(--cream); font-size:19px; margin-bottom:8px; line-height:1.3; }
+  .cta-block p{ font-size:13px; color:rgba(253,250,244,0.72); margin-bottom:18px; }
+  .cta-block .btn-primary{ background:var(--wattle); width:100%; text-align:center; padding:11px; border-radius:9px; }
+
+  /* ============ TRAIL GUIDES ============ */
+  .guides-band{ background: var(--sandy-clay-light); }
+  .guide-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:24px; }
+  .guide-card .plate{ height:200px; border-radius:var(--radius-md) var(--radius-md) 0 0; }
+  .guide-card{ background:var(--cream); border-radius:var(--radius-md); overflow:hidden; box-shadow:var(--shadow-card); }
+  .guide-body{ padding:20px; }
+  .guide-cat{ color:var(--gumleaf); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px; }
+  .guide-body h4{ font-size:18px; margin-bottom:10px; line-height:1.3; }
+  .guide-body p{ font-size:13.5px; color:var(--text-secondary); }
+  .guide-read{ margin-top:14px; font-size:12.5px; font-weight:700; color:var(--ironbark); }
+
+  /* ============ FOOTER ============ */
+  footer{ background:var(--ironbark); color:rgba(253,250,244,0.75); padding:64px 0 30px; }
+  .footer-grid{ display:grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap:40px; margin-bottom:48px; }
+  .footer-brand .logo-text{ color:var(--cream); }
+  .footer-brand p{ font-size:13.5px; margin:16px 0 20px; max-width:280px; color:rgba(253,250,244,0.6); }
+  .footer-col h5{ font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:var(--gumleaf-light); margin-bottom:16px; font-weight:700; }
+  .footer-col ul{ display:flex; flex-direction:column; gap:11px; }
+  .footer-col a{ font-size:13.5px; color:rgba(253,250,244,0.72); }
+  .footer-col a:hover{ color:var(--cream); }
+  .footer-bottom{
+    border-top:1px solid rgba(253,250,244,0.12); padding-top:24px;
+    display:flex; justify-content:space-between; font-size:12.5px; color:rgba(253,250,244,0.5);
+  }
+
+  @media (max-width: 1080px){
+    .listing-grid{ grid-template-columns: repeat(2,1fr); }
+    .region-split{ grid-template-columns:1fr; }
+    .search-row{ grid-template-columns:1fr; }
+  }
+</style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="#" class="logo">Mane Escape</a>
-      <nav aria-label="Main navigation">
-        <a href="#about">About</a>
-        <a href="#experiences">Experiences</a>
-        <a href="#regions">Regions</a>
-        <a href="#contact">Contact</a>
-      </nav>
+
+<header>
+  <div class="wrap nav-row">
+    <div class="logo">
+      <div class="logo-mark">M</div>
+      <div class="logo-text">Mane <span>Escape</span></div>
     </div>
-  </header>
+    <nav class="primary">
+      <a href="#" class="active">Discover</a>
+      <a href="#">Trip Map</a>
+      <a href="#">Guides</a>
+      <a href="#">About</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="#" class="btn btn-ghost">List your property</a>
+      <a href="#" class="btn btn-primary">Sign in</a>
+    </div>
+  </div>
+</header>
 
-  <main>
-    <section class="hero">
-      <div class="hero-overlay"></div>
-      <div class="container hero-content">
-        <p class="section-label">Equestrian tourism — Australia &amp; New Zealand</p>
-        <h1>Your mane escape starts here.</h1>
-        <p class="lead">
-          Discover trail rides, horse-friendly stays, station experiences, and multi-day
-          treks across the Tasman. Whether you travel with your own horse or join a
-          guided ride, Mane Escape connects riders with authentic equestrian adventures.
-        </p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="#experiences">Explore experiences</a>
-          <a class="button button-secondary" href="#contact">Get in touch</a>
+<section class="hero" style="padding:0;">
+  <div class="hero-slides">
+    <div class="hero-slide active"><div class="plate p1" data-caption="Snowy Mountains, NSW" style="width:100%;height:100%;"></div></div>
+    <div class="hero-slide"><div class="plate p2" data-caption="Victorian High Country" style="width:100%;height:100%;"></div></div>
+    <div class="hero-slide"><div class="plate p3" data-caption="South Island, NZ" style="width:100%;height:100%;"></div></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="wrap hero-content">
+    <div class="hero-eyebrow">Australia &amp; New Zealand</div>
+    <h1>Your mane escape starts here.</h1>
+    <p>Trail rides, station stays and BYO horse holidays — discover the operators and properties no other platform lists.</p>
+  </div>
+  <div class="hero-dots">
+    <div class="hero-dot active"></div>
+    <div class="hero-dot"></div>
+    <div class="hero-dot"></div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="search-row">
+    <div class="search-card">
+      <h3>Find your ride</h3>
+      <div class="sub">Search trail rides, treks and horse-friendly stays across AU &amp; NZ</div>
+      <div class="search-fields">
+        <div class="field">
+          <label>Where</label>
+          <div class="control">Region or destination</div>
+        </div>
+        <div class="field">
+          <label>Experience type</label>
+          <div class="control">Any type</div>
+        </div>
+        <div class="field">
+          <label>Dates</label>
+          <div class="control">Add dates</div>
+        </div>
+        <button class="btn btn-primary">Search</button>
+      </div>
+    </div>
+
+    <div class="trip-card">
+      <div>
+        <div class="badge">Key feature</div>
+        <h3>Plan your route</h3>
+        <p>Enter your origin and destination — we'll map every horse-friendly stop along the way.</p>
+      </div>
+      <a href="#" class="btn btn-outline">Open Trip Map →</a>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Handpicked</div>
+        <h2>Featured experiences</h2>
+      </div>
+      <a href="#" class="view-all">View all listings →</a>
+    </div>
+
+    <div class="listing-grid">
+      <div class="listing-card">
+        <div class="plate p1" style="height:172px; position:relative;">
+          <span class="type-tag day">● Day ride</span>
+          <span class="fav-btn">♡</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-region">📍 Snowy Mountains, NSW</div>
+          <h4>Alpine ridgeline half-day trail ride</h4>
+          <div class="listing-meta">
+            <div class="listing-price">$145 <small>/ person</small></div>
+            <div class="listing-rating">★ 4.9</div>
+          </div>
         </div>
       </div>
-    </section>
 
-    <section id="about" class="section">
-      <div class="container two-column">
-        <div>
-          <p class="section-label">What we are</p>
-          <h2>The equestrian travel marketplace</h2>
-          <p>
-            Mane Escape is a discovery platform for riders — not a tour operator.
-            We help you find quality operators, rural stays, and unforgettable rides
-            in regions where horse travel has always been part of the landscape.
-          </p>
+      <div class="listing-card">
+        <div class="plate p3" style="height:172px; position:relative;">
+          <span class="type-tag multiday">● Multi-day</span>
+          <span class="fav-btn">♡</span>
         </div>
-        <div class="use-cases">
-          <article class="card">
-            <h3>Bring your own horse</h3>
-            <p>
-              Horse owners travelling with their horse need spelling yards, paddocks,
-              trail access, and agistment-friendly accommodation at the destination.
-            </p>
-          </article>
-          <article class="card">
-            <h3>Guided experiences</h3>
-            <p>
-              From a half-day trail ride to a multi-day supported trek — find guided
-              equestrian experiences with or without your own horse.
-            </p>
-          </article>
+        <div class="listing-body">
+          <div class="listing-region">📍 High Country, VIC</div>
+          <h4>4-day cattleman's trail trek &amp; camp</h4>
+          <div class="listing-meta">
+            <div class="listing-price">$1,180 <small>/ person</small></div>
+            <div class="listing-rating">★ 4.8</div>
+          </div>
         </div>
       </div>
-    </section>
 
-    <section id="experiences" class="section section-alt">
-      <div class="container">
-        <p class="section-label">Browse by type</p>
-        <h2>Four ways to ride &amp; stay</h2>
-        <p class="section-intro">
-          Every listing on Mane Escape fits one of four experience types —
-          each with its own character and what riders need to know upfront.
-        </p>
-        <div class="listing-grid">
-          <article class="listing-card listing-card--day">
-            <span class="listing-dot" aria-hidden="true"></span>
-            <h3>Day Rides</h3>
-            <p>Guided trail rides from half-day to full day. Operator-supplied horses, group sizes, and experience levels.</p>
-          </article>
-          <article class="listing-card listing-card--trek">
-            <span class="listing-dot" aria-hidden="true"></span>
-            <h3>Multi-day Rides &amp; Treks</h3>
-            <p>Overnight guided treks with camping or accommodation. Day-by-day itineraries and upcoming departures.</p>
-          </article>
-          <article class="listing-card listing-card--accommodation">
-            <span class="listing-dot" aria-hidden="true"></span>
-            <h3>Horse-Friendly Accommodation</h3>
-            <p>Properties that welcome horses on arrival — stables, yards, paddocks, and riding access priced separately.</p>
-          </article>
-          <article class="listing-card listing-card--byo">
-            <span class="listing-dot" aria-hidden="true"></span>
-            <h3>Holiday with Your Horse</h3>
-            <p>BYO horse stays with your horse bundled into the nightly rate. Trail access, requirements, and rural hospitality.</p>
-          </article>
+      <div class="listing-card">
+        <div class="plate p4" style="height:172px; position:relative;">
+          <span class="type-tag accom">● Accommodation</span>
+          <span class="fav-btn">♡</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-region">📍 Hunter Valley, NSW</div>
+          <h4>Ironbark Station horse-friendly stays</h4>
+          <div class="listing-meta">
+            <div class="listing-price">$95 <small>/ night</small></div>
+            <div class="listing-rating">★ 4.7</div>
+          </div>
         </div>
       </div>
-    </section>
 
-    <section id="regions" class="section">
-      <div class="container">
-        <p class="section-label">Where to go</p>
-        <h2>Across Australia &amp; New Zealand</h2>
-        <p class="section-intro">
-          From the Victorian High Country to the Snowy Mountains and beyond —
-          curated equestrian destinations are coming soon.
-        </p>
-        <ul class="region-list">
-          <li>Victorian High Country</li>
-          <li>Snowy Mountains</li>
-          <li>Outback Queensland</li>
-          <li>South Island, New Zealand</li>
-          <li>And more regions on the way</li>
+      <div class="listing-card">
+        <div class="plate p2" style="height:172px; position:relative;">
+          <span class="type-tag byo">● Holiday w/ your horse</span>
+          <span class="fav-btn">♡</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-region">📍 Waikato, NZ</div>
+          <h4>Golden Bay coastal BYO horse retreat</h4>
+          <div class="listing-meta">
+            <div class="listing-price">NZ$140 <small>/ night</small></div>
+            <div class="listing-rating">★ 5.0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="region-split">
+      <div>
+        <div class="section-head" style="margin-bottom:28px;">
+          <div>
+            <div class="eyebrow">By destination</div>
+            <h2>Browse by region</h2>
+          </div>
+        </div>
+        <div class="region-grid">
+          <div class="region-card">
+            <div class="plate p1"></div>
+            <div class="label"><div class="count">42 listings</div><h4>Snowy Mountains</h4></div>
+          </div>
+          <div class="region-card">
+            <div class="plate p2"></div>
+            <div class="label"><div class="count">31 listings</div><h4>Victorian High Country</h4></div>
+          </div>
+          <div class="region-card">
+            <div class="plate p3"></div>
+            <div class="label"><div class="count">26 listings</div><h4>Queensland Hinterland</h4></div>
+          </div>
+          <div class="region-card">
+            <div class="plate p5"></div>
+            <div class="label"><div class="count">19 listings</div><h4>NZ South Island</h4></div>
+          </div>
+          <div class="region-card">
+            <div class="plate p6"></div>
+            <div class="label"><div class="count">14 listings</div><h4>NZ Northland &amp; Waikato</h4></div>
+          </div>
+          <div class="region-card">
+            <div class="plate p4"></div>
+            <div class="label"><div class="count">22 listings</div><h4>Hunter Valley</h4></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-stack">
+        <div class="side-block">
+          <h4>Browse by type</h4>
+          <ul class="type-list">
+            <li><span class="type-dot day"></span> Day rides</li>
+            <li><span class="type-dot multiday"></span> Multi-day treks</li>
+            <li><span class="type-dot accom"></span> Horse-friendly accommodation</li>
+            <li><span class="type-dot byo"></span> Holiday with your horse</li>
+          </ul>
+        </div>
+
+        <div class="cta-block">
+          <div class="eyebrow">For operators</div>
+          <h4>List your property or trail ride</h4>
+          <p>Free to list in Phase 1. Reach BYO riders and trail travellers across AU &amp; NZ.</p>
+          <a href="#" class="btn btn-primary">Get started</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="guides-band">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Trail guides</div>
+        <h2>Plan your next escape</h2>
+      </div>
+      <a href="#" class="view-all">All guides →</a>
+    </div>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <div class="plate p3" data-caption="Kosciuszko NP"></div>
+        <div class="guide-body">
+          <div class="guide-cat">Multi-day trekking</div>
+          <h4>The complete guide to horse camping in Kosciuszko NP</h4>
+          <p>Everything you need to know before booking a multi-day trek in the Snowies.</p>
+          <div class="guide-read">Read guide →</div>
+        </div>
+      </div>
+      <div class="guide-card">
+        <div class="plate p6" data-caption="BYO travel"></div>
+        <div class="guide-body">
+          <div class="guide-cat">BYO horse travel</div>
+          <h4>What every float owner needs before crossing state lines</h4>
+          <p>Coggins tests, vaccination records and float requirements, explained simply.</p>
+          <div class="guide-read">Read guide →</div>
+        </div>
+      </div>
+      <div class="guide-card">
+        <div class="plate p5" data-caption="South Island"></div>
+        <div class="guide-body">
+          <div class="guide-cat">Destination guide</div>
+          <h4>Why NZ's South Island is the next big thing in equestrian travel</h4>
+          <p>Coastal trails, high-country stations and the operators worth knowing.</p>
+          <div class="guide-read">Read guide →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-mark" style="background:var(--gumleaf);">M</div>
+          <div class="logo-text">Mane Escape</div>
+        </div>
+        <p>The discovery platform for equestrian tourism across Australia and New Zealand — trail rides, treks, station stays and BYO horse travel.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Explore</h5>
+        <ul>
+          <li><a href="#">Discover listings</a></li>
+          <li><a href="#">Trip Map</a></li>
+          <li><a href="#">Trail guides</a></li>
+          <li><a href="#">Destinations</a></li>
         </ul>
       </div>
-    </section>
-
-    <section class="section coming-soon">
-      <div class="container coming-soon-inner">
-        <div>
-          <p class="section-label">Coming soon</p>
-          <h2>Search, map your route, and enquire</h2>
-          <p>
-            The full platform — including trip planning, search, and operator listings —
-            is in development. We're building the definitive home for equestrian tourism
-            across the Tasman.
-          </p>
-        </div>
-        <a class="button button-primary" href="#contact">Register your interest</a>
+      <div class="footer-col">
+        <h5>Operators</h5>
+        <ul>
+          <li><a href="#">List your property</a></li>
+          <li><a href="#">How it works</a></li>
+          <li><a href="#">Operator FAQ</a></li>
+          <li><a href="#">Sign in</a></li>
+        </ul>
       </div>
-    </section>
-
-    <section id="contact" class="section section-alt">
-      <div class="container contact-box">
-        <p class="section-label">Contact</p>
-        <h2>Operators &amp; riders — we'd love to hear from you</h2>
-        <p>
-          Interested in listing your property or experience, or want to know when we launch?
-          Reach out and we'll be in touch.
-        </p>
-        <p class="contact-detail">
-          Email: <a href="mailto:hello@maneescape.com.au">hello@maneescape.com.au</a>
-        </p>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Use</a></li>
+        </ul>
       </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="footer-brand">
-        <p class="footer-logo">Mane Escape</p>
-        <p class="footer-tagline">Your mane escape starts here.</p>
-      </div>
-      <p class="footer-copy">&copy; 2026 Mane Escape. Australia &amp; New Zealand.</p>
     </div>
-  </footer>
+    <div class="footer-bottom">
+      <div>© 2026 Mane Escape. Australia &amp; New Zealand.</div>
+      <div>Built for riders, by riders.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('.hero-dot');
+  let current = 0;
+  function showSlide(i){
+    slides.forEach(s => s.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+    slides[i].classList.add('active');
+    dots[i].classList.add('active');
+    current = i;
+  }
+  dots.forEach((dot, i) => dot.addEventListener('click', () => showSlide(i)));
+  setInterval(() => { showSlide((current + 1) % slides.length); }, 5000);
+</script>
+
 </body>
 </html>
