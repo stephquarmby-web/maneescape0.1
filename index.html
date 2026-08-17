@@ -3,16 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mane Escape</title>
+  <meta name="description" content="Mane Escape — Australia's equestrian tourism marketplace. Discover trail rides, horse-friendly accommodation, and BYO horse holidays across Australia and New Zealand.">
+  <title>Mane Escape — Equestrian Tourism, Australia &amp; New Zealand</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="site-header">
-    <div class="container">
+    <div class="container header-inner">
       <a href="#" class="logo">Mane Escape</a>
-      <nav>
+      <nav aria-label="Main navigation">
         <a href="#about">About</a>
-        <a href="#services">Services</a>
+        <a href="#experiences">Experiences</a>
+        <a href="#regions">Regions</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
@@ -20,70 +25,140 @@
 
   <main>
     <section class="hero">
-      <div class="container">
-        <p class="eyebrow">Welcome</p>
-        <h1>Your business, beautifully online</h1>
+      <div class="hero-overlay"></div>
+      <div class="container hero-content">
+        <p class="section-label">Equestrian tourism — Australia &amp; New Zealand</p>
+        <h1>Your mane escape starts here.</h1>
         <p class="lead">
-          Mane Escape is your place on the web. Update this page with your own
-          words, photos, and details as you grow.
+          Discover trail rides, horse-friendly stays, station experiences, and multi-day
+          treks across the Tasman. Whether you travel with your own horse or join a
+          guided ride, Mane Escape connects riders with authentic equestrian adventures.
         </p>
-        <a class="button" href="#contact">Get in touch</a>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#experiences">Explore experiences</a>
+          <a class="button button-secondary" href="#contact">Get in touch</a>
+        </div>
       </div>
     </section>
 
     <section id="about" class="section">
       <div class="container two-column">
         <div>
-          <h2>About us</h2>
+          <p class="section-label">What we are</p>
+          <h2>The equestrian travel marketplace</h2>
           <p>
-            Tell visitors who you are and what makes your business special.
-            A few honest sentences go a long way.
+            Mane Escape is a discovery platform for riders — not a tour operator.
+            We help you find quality operators, rural stays, and unforgettable rides
+            in regions where horse travel has always been part of the landscape.
           </p>
         </div>
-        <div class="card">
-          <h3>Why choose us</h3>
-          <ul>
-            <li>Friendly, personal service</li>
-            <li>Quality you can trust</li>
-            <li>Easy to reach when you need us</li>
-          </ul>
+        <div class="use-cases">
+          <article class="card">
+            <h3>Bring your own horse</h3>
+            <p>
+              Horse owners travelling with their horse need spelling yards, paddocks,
+              trail access, and agistment-friendly accommodation at the destination.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Guided experiences</h3>
+            <p>
+              From a half-day trail ride to a multi-day supported trek — find guided
+              equestrian experiences with or without your own horse.
+            </p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section id="services" class="section section-alt">
+    <section id="experiences" class="section section-alt">
       <div class="container">
-        <h2>Services</h2>
-        <div class="services-grid">
-          <article class="card">
-            <h3>Service one</h3>
-            <p>Describe your first service here.</p>
+        <p class="section-label">Browse by type</p>
+        <h2>Four ways to ride &amp; stay</h2>
+        <p class="section-intro">
+          Every listing on Mane Escape fits one of four experience types —
+          each with its own character and what riders need to know upfront.
+        </p>
+        <div class="listing-grid">
+          <article class="listing-card listing-card--day">
+            <span class="listing-dot" aria-hidden="true"></span>
+            <h3>Day Rides</h3>
+            <p>Guided trail rides from half-day to full day. Operator-supplied horses, group sizes, and experience levels.</p>
           </article>
-          <article class="card">
-            <h3>Service two</h3>
-            <p>Describe your second service here.</p>
+          <article class="listing-card listing-card--trek">
+            <span class="listing-dot" aria-hidden="true"></span>
+            <h3>Multi-day Rides &amp; Treks</h3>
+            <p>Overnight guided treks with camping or accommodation. Day-by-day itineraries and upcoming departures.</p>
           </article>
-          <article class="card">
-            <h3>Service three</h3>
-            <p>Describe your third service here.</p>
+          <article class="listing-card listing-card--accommodation">
+            <span class="listing-dot" aria-hidden="true"></span>
+            <h3>Horse-Friendly Accommodation</h3>
+            <p>Properties that welcome horses on arrival — stables, yards, paddocks, and riding access priced separately.</p>
+          </article>
+          <article class="listing-card listing-card--byo">
+            <span class="listing-dot" aria-hidden="true"></span>
+            <h3>Holiday with Your Horse</h3>
+            <p>BYO horse stays with your horse bundled into the nightly rate. Trail access, requirements, and rural hospitality.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="contact" class="section">
+    <section id="regions" class="section">
+      <div class="container">
+        <p class="section-label">Where to go</p>
+        <h2>Across Australia &amp; New Zealand</h2>
+        <p class="section-intro">
+          From the Victorian High Country to the Snowy Mountains and beyond —
+          curated equestrian destinations are coming soon.
+        </p>
+        <ul class="region-list">
+          <li>Victorian High Country</li>
+          <li>Snowy Mountains</li>
+          <li>Outback Queensland</li>
+          <li>South Island, New Zealand</li>
+          <li>And more regions on the way</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section coming-soon">
+      <div class="container coming-soon-inner">
+        <div>
+          <p class="section-label">Coming soon</p>
+          <h2>Search, map your route, and enquire</h2>
+          <p>
+            The full platform — including trip planning, search, and operator listings —
+            is in development. We're building the definitive home for equestrian tourism
+            across the Tasman.
+          </p>
+        </div>
+        <a class="button button-primary" href="#contact">Register your interest</a>
+      </div>
+    </section>
+
+    <section id="contact" class="section section-alt">
       <div class="container contact-box">
-        <h2>Contact</h2>
-        <p>Email: <a href="mailto:hello@example.com">hello@example.com</a></p>
-        <p>Phone: <a href="tel:+61000000000">+61 000 000 000</a></p>
-        <p>Location: Your city, Australia</p>
+        <p class="section-label">Contact</p>
+        <h2>Operators &amp; riders — we'd love to hear from you</h2>
+        <p>
+          Interested in listing your property or experience, or want to know when we launch?
+          Reach out and we'll be in touch.
+        </p>
+        <p class="contact-detail">
+          Email: <a href="mailto:hello@maneescape.com.au">hello@maneescape.com.au</a>
+        </p>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container">
-      <p>&copy; 2026 Mane Escape. All rights reserved.</p>
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <p class="footer-logo">Mane Escape</p>
+        <p class="footer-tagline">Your mane escape starts here.</p>
+      </div>
+      <p class="footer-copy">&copy; 2026 Mane Escape. Australia &amp; New Zealand.</p>
     </div>
   </footer>
 </body>
